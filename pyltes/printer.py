@@ -99,7 +99,7 @@ class Printer:
             for bs in self.parent.bs:
                 bs_x_locations.append(bs.x)
                 bs_y_locations.append(bs.y)
-            ax.plot(bs_x_locations, bs_y_locations, 'r^', color="black", markersize=10)
+            ax.plot(bs_x_locations, bs_y_locations, 'r^', color="red", markersize=10)
 
         if UE == True:
             ue_x_locations = []
