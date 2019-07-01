@@ -115,7 +115,7 @@ class Printer:
 
         if obstacles == True:
             for obstacle in self.parent.obstacles:
-                ax.arrow(obstacle[0], obstacle[1], obstacle[2] - obstacle[0], obstacle[3] - obstacle[1])
+                ax.arrow(obstacle[0], obstacle[1], obstacle[2] - obstacle[0], obstacle[3] - obstacle[1], color="red")
 
         networkBorder = plt.Rectangle((0,0), self.parent.constraintAreaMaxX, self.parent.constraintAreaMaxY, color='black', fill=False)
         ax.add_patch(networkBorder)
