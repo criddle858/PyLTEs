@@ -164,7 +164,8 @@ class UE(NetworkDevice):
         if obstacleVector != None:
             receivedPower_connectedBS -= self.calculateWallLoss(BS_vector, obstacleVector)
             print ("wall loss for UE at ", self.x, ",", self.y, " = ", self.calculateWallLoss(BS_vector, obstacleVector) )
-
+        else:
+            print("obstacleVector == none")
         myColor = BS_vector[self.connectedToBS].color
         receivedPower_otherBS_mw = 0
         for bs_other in BS_vector:
