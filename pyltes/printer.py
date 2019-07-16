@@ -96,10 +96,14 @@ class Printer:
         if BS == True:
             bs_x_locations = []
             bs_y_locations = []
+            bs_count = 0
             for bs in self.parent.bs:
                 bs_x_locations.append(bs.x)
                 bs_y_locations.append(bs.y)
+                bs_count+=1
             ax.plot(bs_x_locations, bs_y_locations, 'r^', color="red", markersize=10)
+            for i in rante(0,bs_count):
+                ax.annotate(bs.ID, bs_x_locations[i], bs_y_locations[i])
 
         if UE == True:
             ue_x_locations = []
