@@ -102,8 +102,8 @@ class Printer:
                 bs_y_locations.append(bs.y)
                 bs_ID.append(bs.ID)
             ax.plot(bs_x_locations, bs_y_locations, 'r^', color="red", markersize=10)
-            ax.annotate(bs_ID, xy=(bs_x_locations, bs_y_locations), color='red)
-                     
+            ax.annotate(bs_ID, xy=(bs_x_locations, bs_y_locations), color='red')
+                        
         if UE == True:
             ue_x_locations = []
             ue_y_locations = []
