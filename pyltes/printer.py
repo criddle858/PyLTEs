@@ -106,7 +106,7 @@ class Printer:
             ax.plot(bs_x_locations, bs_y_locations, 'r^', color="red", markersize=10)
             for i in range(0,bs_count):
                 ax.annotate(bs_ID[i], xy=(bs_x_locations[i],bs_y_locations[i]), xytext=(bs_x_locations[i]+100, bs_y_locations[i]+100), color='red')
-                print("annotating BS # ", bs_ID[i], " at (", bs_x_locations[i], ",", bs_y_locations[i],")")
+                #print("annotating BS # ", bs_ID[i], " at (", bs_x_locations[i], ",", bs_y_locations[i],")")
                         
         if UE == True:
             ue_x_locations = []
