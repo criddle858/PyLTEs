@@ -103,7 +103,7 @@ class Printer:
                 bs_count+=1
             ax.plot(bs_x_locations, bs_y_locations, 'r^', color="red", markersize=10)
             for i in range(0,bs_count):
-                ax.annotate(bs.ID, bs_x_locations[i], bs_y_locations[i])
+                ax.annotate(bs.ID, xy=(bs_x_locations[i], bs_y_locations[i]))
 
         if UE == True:
             ue_x_locations = []
