@@ -52,8 +52,8 @@ class UE(NetworkDevice):
                     foundBS = bs.ID
         self.connectedToBS = foundBS
 
-    #def connectToTheBestBS(self, BS_vector, obstacleVector = None):
-    def connectToTheBestBS(self, BS_vector, obstacleVector):
+    def connectToTheBestBS(self, BS_vector, obstacleVector = None):
+    #def connectToTheBestBS(self, BS_vector, obstacleVector):
         theBestSINR = -1000
         foundBS = -1
         for bs in BS_vector:
