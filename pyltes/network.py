@@ -71,8 +71,8 @@ class CellularNetwork:
 
     def connectUsersToTheBestBS(self):
         for ue in self.ue:
+            ue.connectToTheBestBS(self.bs, self.obstacles) #ccr
             #ue.connectToTheBestBS(self.bs) 
-	    ue.connectToTheBestBS(self.bs, self.obstacles) #ccr
 		
     def setPowerInAllBS(self, outsidePowerLevel, insidePowerLevel=None):
         if (insidePowerLevel==None):
