@@ -70,7 +70,7 @@ class CellularNetwork:
         for bs in self.bs:
             coordinates.append(bs.x, bs.y)
 	print(coordinates)
-	
+
     def connectUsersToNearestBS(self):
         for ue in self.ue:
             ue.connectToNearestBS(self.bs)
