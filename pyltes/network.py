@@ -68,7 +68,7 @@ class CellularNetwork:
     def printXYInBS(self):
         coords = []
         for bs in self.bs:
-            powers.append(bs.x)
+            coords.append(bs.x)
         print(coordss)	
 	
     def connectUsersToNearestBS(self):
