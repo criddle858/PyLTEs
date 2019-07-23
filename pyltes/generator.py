@@ -197,4 +197,11 @@ class Generator:
             ue.y = random.uniform(0, self.parent.constraintAreaMaxY)
             self.parent.ue.append(ue)
             number = number+1
+            
+    def insertUE(self, xPos, yPos, ueNum):
+         ue = devices.UE()
+         ue.ID = ueNum
+         ue.x = xPos
+         ue.y = yPos
+         self.parent.ue.append(ue)
 
