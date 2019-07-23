@@ -12,12 +12,15 @@ class Generator:
 
     def create1BSnetwork(self, radius):
         self.parent.radius = radius
-        #H_hex = 2 * radius
-        #W_hex = radius * math.sqrt(3)
-        #self.parent.constraintAreaMaxX = 2 * W_hex
-        #self.parent.constraintAreaMaxY = H_hex + 1.5 * radius
-        self.parent.constraintAreaMaxX = 4 * radius
-        self.parent.constraintAreaMaxY = 4 * radius
+
+        H_hex = 2 * radius
+        W_hex = radius * math.sqrt(3)
+        self.parent.constraintAreaMaxX = 2 * W_hex
+        self.parent.constraintAreaMaxY = H_hex + 1.5 * radius
+
+        #self.parent.constraintAreaMaxX = 4 * radius
+        #self.parent.constraintAreaMaxY = 4 * radius
+
         bs = devices.BS()
         bs.ID = 0
         bs.turnedOn = True
