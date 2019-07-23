@@ -198,9 +198,3 @@ class Generator:
             self.parent.ue.append(ue)
             number = number+1
 
-    def insertUE(self, x_pos, y_pos, ue_num):
-        ue = devices.UE()
-        ue.ID = ue_num
-        ue.x = x_pos
-        ue.y = y_pos
-        self.parent.ue.append(ue)
