@@ -126,6 +126,8 @@ class UE(NetworkDevice):
         else:
             PL = 20 * math.log10( (4*math.pi*R) / lambda_val ) + s
 
+            
+        print("R = ", R, ", PL = ", PL, "Psend = ", Psend)
         pRec = pSend - PL
         if(pRec > pSend):
             pRec = pSend
@@ -158,6 +160,8 @@ class UE(NetworkDevice):
         ue_angle_rad = math.acos(cos_alpha)
         ue_angle = math.trunc(math.degrees(ue_angle_rad))
 
+        print("(in calculateSINRfor) ue_angle = ", ue_angle, " degrees")
+        
         if self.y - BS_vector[self.connectedToBS].y < 0:
             ue_angle = 359 - ue_angle
 
@@ -302,7 +306,8 @@ class BS(NetworkDevice):
         self.omnidirectionalAntenna = False
         self.useSFR = False
         self.characteristic = []
-        self.height = 32
+        self.height = 32 # feet
+        self.tilt = 0    # degrees
         
     def loadCharacteristic(self, filename):
         readCharacteristic = csv.reader(open(filename), delimiter=';', quotechar='|')
