@@ -302,7 +302,8 @@ class BS(NetworkDevice):
         self.omnidirectionalAntenna = False
         self.useSFR = False
         self.characteristic = []
-
+        self.height = 32
+        
     def loadCharacteristic(self, filename):
         readCharacteristic = csv.reader(open(filename), delimiter=';', quotechar='|')
         for oneAngle in readCharacteristic:
