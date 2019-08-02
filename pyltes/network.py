@@ -59,16 +59,16 @@ class CellularNetwork:
                 bs.turnedOn = True
                 self.bs.append(copy.deepcopy(bs))
         else:
-		bs = devices.BS()
-		bs.x = x_pos
-		bs.y = y_pos
-		bs.insidePower = 37
-		bs.outsidePower = 40
-		bs.angle = 0
-		bs.ID = len(self.bs)
-		bs.turnedOn = True
-		bs.omnidirectionalAntenna = True
-		self.bs.append(copy.deepcopy(bs))
+	    bs = devices.BS()
+	    bs.x = x_pos
+	    bs.y = y_pos
+	    bs.insidePower = 37
+	    bs.outsidePower = 40
+            bs.angle = 0
+            bs.ID = len(self.bs)
+            bs.turnedOn = True
+            bs.omnidirectionalAntenna = True
+            self.bs.append(copy.deepcopy(bs))
 		
     def printPowersInBS(self):
         powers = []
