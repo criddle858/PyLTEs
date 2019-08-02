@@ -59,7 +59,7 @@ class CellularNetwork:
                 bs.turnedOn = True
                 self.bs.append(copy.deepcopy(bs))
         else:
-	    bs = devices.BS()
+            bs = devices.BS()
 	    bs.x = x_pos
 	    bs.y = y_pos
 	    bs.insidePower = 37
