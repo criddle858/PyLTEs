@@ -127,7 +127,7 @@ class UE(NetworkDevice):
             PL = 20 * math.log10( (4*math.pi*R) / lambda_val ) + s
 
             
-        print("R = ", R, ", PL = ", PL, "Psend = ", PSend)
+        print("R = ", R, ", PL = ", PL, "pSend = ", pSend)
         pRec = pSend - PL
         if(pRec > pSend):
             pRec = pSend
