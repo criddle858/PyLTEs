@@ -159,11 +159,13 @@ class UE(NetworkDevice):
         cos_alpha = aob / (R * 10)
         ue_angle_rad = math.acos(cos_alpha)
         ue_angle = math.trunc(math.degrees(ue_angle_rad))
+        
+        print("(in calculateSINRfor) ue_angle = ", ue_angle, " degrees")
 
         if self.y - BS_vector[self.connectedToBS].y < 0:
             ue_angle = 359 - ue_angle
 
-        print("(in calculateSINRfor) ue_angle = ", ue_angle, " degrees")
+        print("(after self.y check) ue_angle = ", ue_angle, " degrees")
         
         if len(BS_vector[self.connectedToBS].characteristic) != 0:
             receivedPower_connectedBS += float(BS_vector[self.connectedToBS].characteristic[ue_angle])
