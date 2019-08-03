@@ -30,6 +30,9 @@ class UE(NetworkDevice):
             return False
         ue_angle_rad = math.acos(a_y/distance_bs_ue)
         ue_angle = math.degrees(ue_angle_rad)
+
+        print("(in isSeenFromBS) ue_angle = ", ue_angle)
+        
         if self.x <= BS.x:
             ue_angle = 360 - ue_angle
         if BS.angle > ue_angle:
