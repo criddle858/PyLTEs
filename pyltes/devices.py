@@ -160,18 +160,16 @@ class UE(NetworkDevice):
         ue_angle_rad = math.acos(cos_alpha)
         ue_angle = math.trunc(math.degrees(ue_angle_rad))
 
-        print("(in calculateSINRfor) ue_angle = ", ue_angle, " degrees")
-        
         if self.y - BS_vector[self.connectedToBS].y < 0:
             ue_angle = 359 - ue_angle
 
+        print("(in calculateSINRfor) ue_angle = ", ue_angle, " degrees")
+        
         if len(BS_vector[self.connectedToBS].characteristic) != 0:
             receivedPower_connectedBS += float(BS_vector[self.connectedToBS].characteristic[ue_angle])
         if obstacleVector != None:
             receivedPower_connectedBS -= self.calculateWallLoss(BS_vector, obstacleVector)
-        #    print ("wall loss for UE at ", self.x, ",", self.y, " = ", self.calculateWallLoss(BS_vector, obstacleVector) )
-        #else:
-        #    print("obstacleVector == none")
+
         myColor = BS_vector[self.connectedToBS].color
         receivedPower_otherBS_mw = 0
         for bs_other in BS_vector:
