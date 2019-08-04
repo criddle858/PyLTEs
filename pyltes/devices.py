@@ -44,7 +44,7 @@ class UE(NetworkDevice):
             return False
         h_angle = self.hAngleFromBS(BS)
 
-        print("(in isSeenFromBS 3) h_angle = ", ue_angle)
+        print("(in isSeenFromBS 3) h_angle = ", h_angle)
         print("... v_angle = ", self.vAngleFromBS(BS))
         if BS.angle > h_angle:
             alpha_diff = BS.angle - h_angle
