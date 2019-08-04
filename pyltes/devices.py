@@ -176,7 +176,9 @@ class UE(NetworkDevice):
         ue_angle = math.trunc(math.degrees(ue_angle_rad))
         
         print("(in calculateSINRfor 2) ue_angle = ", ue_angle, " degrees")
-
+        h_angle = self.hAngleFromBS(BS_vector[self.connectedToBS])
+        print("... my calculation hAngleFromBS = " h_angle)
+        
         if self.y - BS_vector[self.connectedToBS].y < 0:
             ue_angle = 359 - ue_angle
 
