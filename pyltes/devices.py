@@ -21,6 +21,7 @@ class UE(NetworkDevice):
         return math.sqrt((self.x-BS.x)**2+(self.y-BS.y)**2)
     
     def angleFromBS(self, BS):
+        print("ue: ", self.x, ",", self.y, " BS: ", BS.x, ",", BS.y)
         a_y = BS.y-self.y
         distance_bs_ue = self.distanceToBS(BS)
         ue_angle_rad = math.acos(a_y/distance_bs_ue)
