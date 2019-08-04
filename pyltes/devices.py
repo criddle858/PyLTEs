@@ -19,17 +19,25 @@ class UE(NetworkDevice):
 
     def distanceToBS(self, BS):
         return math.sqrt((self.x-BS.x)**2+(self.y-BS.y)**2)
+    
+    def angleFromBS(self, BS):
+        a_y = BS.y-self.y
+        distance_bs_ue = self.distanceToBS(BS)
+        ue_angle_rad = math.acos(a_y/distance_bs_ue)
+        ue_angle = math.degrees(ue_angle_rad)
+        return ue_angle
 
     def isSeenFromBS(self, BS):
+        #returns true if angle allow signal receive, else False
         if BS.omnidirectionalAntenna == True:
             return True
-        #returns true if angle allow signal receive, else False
-        a_y = BS.y-self.y
         distance_bs_ue = self.distanceToBS(BS)
         if distance_bs_ue == 0 or BS.turnedOn == False:
             return False
-        ue_angle_rad = math.acos(a_y/distance_bs_ue)
-        ue_angle = math.degrees(ue_angle_rad)
+        ue_angle = self.angleFromBS(BS)
+        #a_y = BS.y-self.y
+        #ue_angle_rad = math.acos(a_y/distance_bs_ue)
+        #ue_angle = math.degrees(ue_angle_rad)
 
         print("(in isSeenFromBS) ue_angle = ", ue_angle)
         
