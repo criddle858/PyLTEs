@@ -23,7 +23,7 @@ class UE(NetworkDevice):
     def vAngleFromBS(self, BS):
         distance_bs_ue = self.distanceToBS(BS)
         v_angle_rad = math.atan(BS.height/distance_bs_ue)
-        v_angle = math.degrees(ue_angle_rad)
+        v_angle = math.degrees(v_angle_rad)
         return int(v_angle)
 
     def hAngleFromBS(self, BS):
