@@ -20,14 +20,20 @@ class UE(NetworkDevice):
     def distanceToBS(self, BS):
         return math.sqrt((self.x-BS.x)**2+(self.y-BS.y)**2)
     
+    def vAngleFromBS(self, BS):
+        distance_bs_ue = self.distanceToBS(BS)
+        v_angle_rad = math.atan(BS.height/distance_bs_ue)
+        v_angle = math.degrees(ue_angle_rad)
+        return int(v_angle)
+
     def hAngleFromBS(self, BS):
         a_y = BS.y-self.y
         distance_bs_ue = self.distanceToBS(BS)
-        ue_angle_rad = math.acos(a_y/distance_bs_ue)
-        ue_angle = math.degrees(ue_angle_rad)
+        h_angle_rad = math.acos(a_y/distance_bs_ue)
+        h_angle = math.degrees(h_angle_rad)
         if self.x <= BS.x:
-            ue_angle = 360 - ue_angle
-        return int(ue_angle)
+            h_angle = 360 - h_angle
+        return int(h_angle)
 
     def isSeenFromBS(self, BS):
         #returns true if angle allow signal receive, else False
@@ -36,14 +42,14 @@ class UE(NetworkDevice):
         distance_bs_ue = self.distanceToBS(BS)
         if distance_bs_ue == 0 or BS.turnedOn == False:
             return False
-        ue_angle = self.hAngleFromBS(BS)
+        h_angle = self.hAngleFromBS(BS)
 
-        print("(in isSeenFromBS 3) ue_angle = ", ue_angle)
-        
-        if BS.angle > ue_angle:
-            alpha_diff = BS.angle - ue_angle
+        print("(in isSeenFromBS 3) h_angle = ", ue_angle)
+        print("... v_angle = ", self.vAngleFromBS(BS))
+        if BS.angle > h_angle:
+            alpha_diff = BS.angle - h_angle
         else:
-            alpha_diff = ue_angle - BS.angle
+            alpha_diff = h_angle - BS.angle
         print("BS.angle = ", BS.angle, ", alpha_diff = ", alpha_diff)
         if alpha_diff <= 60 or alpha_diff >= 300:
             return True
