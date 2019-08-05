@@ -166,26 +166,13 @@ class UE(NetworkDevice):
         else: # where=="out"
             receivedPower_connectedBS=self.calculateReceivedPower(BS_vector[self.connectedToBS].outsidePower, R)
 
-        a_x = 10
-        a_y = 0
-        b_x = self.x - BS_vector[self.connectedToBS].x
-        b_y = self.y - BS_vector[self.connectedToBS].y
-        aob = a_x * b_x + a_y * b_y
-        cos_alpha = aob / (R * 10)
-        ue_angle_rad = math.acos(cos_alpha)
-        ue_angle = math.trunc(math.degrees(ue_angle_rad))
         
         print("(in calculateSINRfor 2) ue_angle = ", ue_angle, " degrees")
         h_angle = self.hAngleFromBS(BS_vector[self.connectedToBS])
-        print("... my calculation hAngleFromBS = ", h_angle)
-        
-        if self.y - BS_vector[self.connectedToBS].y < 0:
-            ue_angle = 359 - ue_angle
-
-        print("(after self.y check) ue_angle = ", ue_angle, " degrees")
+        v_angle = self.vAngleFromBS(BS_vector[self.connectedToBS])
         
         if len(BS_vector[self.connectedToBS].characteristic) != 0:
-            receivedPower_connectedBS += float(BS_vector[self.connectedToBS].characteristic[ue_angle])
+            receivedPower_connectedBS += float(BS_vector[self.connectedToBS].characteristic[v_angle])
         if obstacleVector != None:
             receivedPower_connectedBS -= self.calculateWallLoss(BS_vector, obstacleVector)
 
