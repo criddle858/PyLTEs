@@ -142,7 +142,7 @@ class UE(NetworkDevice):
             PL = 20 * math.log10( (4*math.pi*R) / lambda_val ) + s
 
             
-        print("R = ", R, ", PL = ", PL, "pSend = ", pSend)
+        #print("R = ", R, ", PL = ", PL, "pSend = ", pSend)
         pRec = pSend - PL
         if(pRec > pSend):
             pRec = pSend
@@ -166,8 +166,6 @@ class UE(NetworkDevice):
         else: # where=="out"
             receivedPower_connectedBS=self.calculateReceivedPower(BS_vector[self.connectedToBS].outsidePower, R)
 
-        
-        print("(in calculateSINRfor 2) ue_angle = ", ue_angle, " degrees")
         h_angle = self.hAngleFromBS(BS_vector[self.connectedToBS])
         v_angle = self.vAngleFromBS(BS_vector[self.connectedToBS])
         
