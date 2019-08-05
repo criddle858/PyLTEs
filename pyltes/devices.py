@@ -116,6 +116,9 @@ class UE(NetworkDevice):
         return wallLoss
 
     def calculateReceivedPower(self, pSend, distance):
+        #
+        # Replace with simpler model used in Bijan's Matlab
+        #
         R = distance
         lambda_val = 0.142758313333
         a = 4.0
@@ -169,6 +172,9 @@ class UE(NetworkDevice):
         h_angle = self.hAngleFromBS(BS_vector[self.connectedToBS])
         v_angle = self.vAngleFromBS(BS_vector[self.connectedToBS])
         
+        # 
+        # Apply horizontal and vertical antenna gain patterns
+        #
         if len(BS_vector[self.connectedToBS].characteristic) != 0:
             receivedPower_connectedBS += float(BS_vector[self.connectedToBS].characteristic[v_angle])
         if obstacleVector != None:
@@ -200,10 +206,13 @@ class UE(NetworkDevice):
                 else:
                     bs_other_power = bs_other.insidePower
                 receivedPower_one = self.calculateReceivedPower(bs_other_power, self.distanceToBS(bs_other))
+                #
+                # Add horizontal and vertical antenna pattern gains
+                #
+        if obstacleVector != None:
+            receivedPower_one = receivedPower_one - self.calculateWallLoss(BS_vector, obstacleVector)
 
-            if obstacleVector != None:
-                receivedPower_one = receivedPower_one - self.calculateWallLoss(BS_vector, obstacleVector)
-            receivedPower_otherBS_mw = receivedPower_otherBS_mw + math.pow(10, receivedPower_one/10)
+        receivedPower_otherBS_mw = receivedPower_otherBS_mw + math.pow(10, receivedPower_one/10)
 
         I_mw = receivedPower_otherBS_mw
         S_mw = math.pow(10, receivedPower_connectedBS/10)
