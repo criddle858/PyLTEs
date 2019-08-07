@@ -184,6 +184,7 @@ class UE(NetworkDevice):
 
         myColor = BS_vector[self.connectedToBS].color
         receivedPower_otherBS_mw = 0
+        receivedPower_one = -999 # dB
         for bs_other in BS_vector:
             if self.connectedToBS == bs_other.ID:
                 continue
