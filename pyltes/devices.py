@@ -336,12 +336,17 @@ class BS(NetworkDevice):
     def calculateGain(self):
         if self.omnidirectionalAntenna == True:
             self.gain = 9 #dBi
-            self.hBeamwidth = 365 #degrees
+            self.hBeamwidth = 360 #degrees
             self.vBeamwidth = 11  #degrees
-            self.hGain = [0] * 365
-            #for degree in range(365):
-            #    self.vGain.append(-min(12*( )
+            self.hGain = [0] * 360
+            for degree in range(360):
+                nDegree = min(degree, (360-degree))
+                self.vGain.append(-min(12*(nDegree/vBeamwidth)**2, 20))
         else:
             self.gain = 15 #dBi
             self.hBeamwidth = 70  #degrees
             self.vBeamwidth = 11  #degrees
+            for degree in range(360):
+                nDegree = min(degree, (360-degree))
+                self.hGain.append(-min(12*(nDegree/hBeamwidth)**2, 25))
+                self.vGain.append(-min(12*(nDegree/vBeamwidth)**2, 20))
