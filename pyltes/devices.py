@@ -321,8 +321,8 @@ class BS(NetworkDevice):
         self.characteristic = []
         self.height = 32 # feet
         self.tilt = 0    # degrees
-        self.vBeamwidth 
-        self.hBeamwidth
+        self.vBeamwidth = 0
+        self.hBeamwidth = 0
         self.AntennaGain = 0    # dBi
         self.hGain = []  # Horizontal antenna gain
         self.vGain = []  # Vertical antenna gain
