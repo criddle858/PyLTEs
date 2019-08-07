@@ -327,6 +327,7 @@ class BS(NetworkDevice):
         self.AntennaGain = 0    # dBi
         self.hGain = []  # Horizontal antenna gain
         self.vGain = []  # Vertical antenna gain
+        self.calculateGain()
         
     def loadCharacteristic(self, filename):
         readCharacteristic = csv.reader(open(filename), delimiter=';', quotechar='|')
