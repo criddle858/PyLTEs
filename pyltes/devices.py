@@ -119,35 +119,7 @@ class UE(NetworkDevice):
         #
         # Replace with simpler model used in Bijan's Matlab
         #
-        PL2 = 128.1 + 37.6*math.log10(distance/1000)
-
-        R = distance
-        lambda_val = 0.142758313333
-        a = 4.0
-        b = 0.0065
-        c = 17.1
-        d = 10.8
-        #s = 15.8
-        s = -15.8
-
-        ht = 40
-        hr = 1.5
-        f = 2.1
-        gamma = a - b*ht + c/ht
-        Xf = 6 * math.log10( f/2 )
-        Xh = -d * math.log10( hr/2 )
-
-        R0 = 100.0
-        R0p = R0 * pow(10.0,-( (Xf+Xh) / (10*gamma) ))
-
-        if(R>R0p):
-            alpha = 20 * math.log10( (4*math.pi*R0p) / lambda_val )
-            PL = alpha + 10*gamma*math.log10( R/R0 ) + Xf + Xh + s
-        else:
-            PL = 20 * math.log10( (4*math.pi*R) / lambda_val ) + s
-
-            
-        #print("(in CalcRecPwr: R = ", R, ", PL = ", PL, "PL2 = ", PL2, "pSend = ", pSend)
+        PL = 128.1 + 37.6*math.log10(distance/1000)
         pRec = pSend - PL
         if(pRec > pSend):
             pRec = pSend
@@ -324,7 +296,7 @@ class BS(NetworkDevice):
         self.tilt = 0    # degrees
         self.vBeamwidth = 0
         self.hBeamwidth = 0
-        self.AntennaGain = 0    # dBi
+        self.antennaGain = 0    # dBi
         self.hGain = []  # Horizontal antenna gain
         self.vGain = []  # Vertical antenna gain
         self.calculateGain()
@@ -336,7 +308,7 @@ class BS(NetworkDevice):
     
     def calculateGain(self):
         if self.omnidirectionalAntenna == True:
-            self.gain = 9 #dBi
+            self.antnenaGain = 9 #dBi
             self.hBeamwidth = 360 #degrees
             self.vBeamwidth = 11  #degrees
             self.hGain = [0] * 360
@@ -344,7 +316,7 @@ class BS(NetworkDevice):
                 nDegree = min(degree, (360-degree))
                 self.vGain.append(-min(12*(nDegree/self.vBeamwidth)**2, 20))
         else:
-            self.gain = 15 #dBi
+            self.antennaGain = 15 #dBi
             self.hBeamwidth = 70  #degrees
             self.vBeamwidth = 11  #degrees
             for degree in range(360):
