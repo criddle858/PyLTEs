@@ -332,7 +332,7 @@ class BS(NetworkDevice):
         for oneAngle in readCharacteristic:
             self.characteristic.append(float(oneAngle[1]))
     
-    def calculateGain(self)
+    def calculateGain(self):
         if(self.omnidirectionalAntenna = True):
             self.gain = 9 #dBi
             self.hBeamwidth = 365 #degrees
