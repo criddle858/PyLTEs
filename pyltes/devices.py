@@ -119,6 +119,8 @@ class UE(NetworkDevice):
         #
         # Replace with simpler model used in Bijan's Matlab
         #
+        PL2 = 128.1 + 37.6*math.log10(distance/1000)
+
         R = distance
         lambda_val = 0.142758313333
         a = 4.0
@@ -145,7 +147,7 @@ class UE(NetworkDevice):
             PL = 20 * math.log10( (4*math.pi*R) / lambda_val ) + s
 
             
-        #print("R = ", R, ", PL = ", PL, "pSend = ", pSend)
+        print("(in CalcRecPwr: R = ", R, ", PL = ", PL, "PL2 = ", PL2, "pSend = ", pSend)
         pRec = pSend - PL
         if(pRec > pSend):
             pRec = pSend
@@ -319,8 +321,26 @@ class BS(NetworkDevice):
         self.characteristic = []
         self.height = 32 # feet
         self.tilt = 0    # degrees
+        self.vBeamwidth 
+        self.hBeamwidth
+        self.AntennaGain = 0    # dBi
+        self.hGain = []  # Horizontal antenna gain
+        self.vGain = []  # Vertical antenna gain
         
     def loadCharacteristic(self, filename):
         readCharacteristic = csv.reader(open(filename), delimiter=';', quotechar='|')
         for oneAngle in readCharacteristic:
             self.characteristic.append(float(oneAngle[1]))
+    
+    def calculateGain(self)
+        if(self.omnidirectionalAntenna = True):
+            self.gain = 9 #dBi
+            self.hBeamwidth = 365 #degrees
+            self.vBeamwidth = 11  #degrees
+            self.hGain = [0] * 365
+            #for degree in range(365):
+            #    self.vGain.append(-min(12*( )
+        else:
+            self.gain = 15 #dBi
+            self.hBeamwidth = 70  #degrees
+            self.vBeamwidth = 11  #degrees
