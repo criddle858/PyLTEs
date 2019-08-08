@@ -93,7 +93,6 @@ class UE(NetworkDevice):
             wallLoss = wallLoss + obstacle[4]
         return wallLoss
 
-    #def calculateReceivedPower(self, pSend, distance):
     def calculatePathLoss(self, pSend, distance):
         #
         # Replace with simpler model used in Bijan's Matlab
@@ -112,6 +111,23 @@ class UE(NetworkDevice):
         N = 10*math.log10(k*T) + 10*math.log10(BW)
         return N
 
+    def calcAntennaGain(self, BS):
+        # 
+        # Apply antenna gain pattern (horizontal and vertical)
+        #
+        antennaGain = BS_vector[self.connectedToBS].antennaGain        
+        h_angle = self.hAngleFromBS(BS)
+        h_angle -= BS.angle
+        if(h_angle < 0):
+            h_angle += 360
+        v_angle = self.vAngleFromBS(BS)
+        v_angle -= BS.tilt
+        if(v_angle < 0):
+            v_angle += 360
+        antennaGain += BS.hGain[h_angle]
+        antennaGain += BS.vGain[v_angle]
+        return antennaGain
+                          
     def calculateSINRfor(self, where, BS_vector, obstacleVector = None):
         if (where not in ["in", "out"]):
             raise Exception("wrong argument")
@@ -121,21 +137,15 @@ class UE(NetworkDevice):
             receivedPower_connectedBS=self.calculatePathLoss(BS_vector[self.connectedToBS].insidePower, R)
         else: # where=="out"
             receivedPower_connectedBS=self.calculatePathLoss(BS_vector[self.connectedToBS].outsidePower, R)
-
-        h_angle = self.hAngleFromBS(BS_vector[self.connectedToBS])
-        v_angle = self.vAngleFromBS(BS_vector[self.connectedToBS])
         
-        # 
-        # Apply horizontal and vertical antenna gain patterns
-        #
-        if len(BS_vector[self.connectedToBS].characteristic) != 0:
-            receivedPower_connectedBS += float(BS_vector[self.connectedToBS].characteristic[v_angle])
+        receivedPower_connectedBS += calcAntennaGain(BS_vector[self.connectedToBS])
+            
         if obstacleVector != None:
             receivedPower_connectedBS -= self.calculateWallLoss(BS_vector, obstacleVector)
 
         myColor = BS_vector[self.connectedToBS].color
         receivedPower_otherBS_mw = 0
-        receivedPower_one = -999 # dB
+        receivedPower_one = -1000 # dB
         for bs_other in BS_vector:
             if self.connectedToBS == bs_other.ID:
                 continue
@@ -151,18 +161,19 @@ class UE(NetworkDevice):
                         bs_other_power = bs_other.insidePower
 
                     sum_power_mw += math.pow(10, self.calculateReceivedPower(bs_other_power, self.distanceToBS(bs_other))/10)
-                receivedPower_one = 10*math.log10(sum_power_mw/2.0)
+                receivedPower_one = 10*math.log10(sum_power_mw)
             else: # where=="out"
                 if(bs_other.color == myColor):
                     bs_other_power = bs_other.outsidePower
                 else:
                     bs_other_power = bs_other.insidePower
                 receivedPower_one = self.calculatePathLoss(bs_other_power, self.distanceToBS(bs_other))
-                #
-                # Add horizontal and vertical antenna pattern gains
-                #
-        if obstacleVector != None:
-            receivedPower_one = receivedPower_one - self.calculateWallLoss(BS_vector, obstacleVector)
+            #
+            # Add horizontal and vertical antenna pattern gains
+            #
+            receivedPower_one += calcAntennaGain(bs_other[self.connectedToBS])
+            if obstacleVector != None:
+                receivedPower_one = receivedPower_one - self.calculateWallLoss(BS_vector, obstacleVector)
 
         receivedPower_otherBS_mw = receivedPower_otherBS_mw + math.pow(10, receivedPower_one/10)
 
@@ -268,7 +279,6 @@ class BS(NetworkDevice):
         self.type = "MakroCell"
         self.omnidirectionalAntenna = False
         self.useSFR = False
-        self.characteristic = []
         self.height = 10 # meters
         self.tilt = 0    # degrees
         self.vBeamwidth = 0
@@ -277,12 +287,7 @@ class BS(NetworkDevice):
         self.hGain = []  # Horizontal antenna gain
         self.vGain = []  # Vertical antenna gain
         self.calculateGain()
-        
-    def loadCharacteristic(self, filename):
-        readCharacteristic = csv.reader(open(filename), delimiter=';', quotechar='|')
-        for oneAngle in readCharacteristic:
-            self.characteristic.append(float(oneAngle[1]))
-    
+            
     def calculateGain(self):
         if self.omnidirectionalAntenna == True:
             self.antnenaGain = 9 #dBi
