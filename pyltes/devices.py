@@ -115,7 +115,7 @@ class UE(NetworkDevice):
         # 
         # Apply antenna gain pattern (horizontal and vertical)
         #
-        antennaGain = BS_vector[self.connectedToBS].antennaGain        
+        antennaGain = BS.antennaGain        
         h_angle = self.hAngleFromBS(BS)
         h_angle -= BS.angle
         if(h_angle < 0):
