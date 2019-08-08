@@ -157,7 +157,7 @@ class UE(NetworkDevice):
                     bs_other_power = bs_other.outsidePower
                 else:
                     bs_other_power = bs_other.insidePower
-                receivedPower_one = self.calculateReceivedPower(bs_other_power, self.distanceToBS(bs_other))
+                receivedPower_one = self.calculatePathLoss(bs_other_power, self.distanceToBS(bs_other))
                 #
                 # Add horizontal and vertical antenna pattern gains
                 #
