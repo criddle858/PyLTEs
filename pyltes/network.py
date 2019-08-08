@@ -112,8 +112,8 @@ class CellularNetwork:
                 bs.insidePower = bs.outsidePower
 
     def calcAntennaGainsInAllBS(self):
-	for bs in self.bs:
-		bs.calculateGain()
+        for bs in self.bs:
+            bs.calculateGain()
 		
     def setSmallestPossiblePowerInAllBS(self):
         for bs in self.bs:
