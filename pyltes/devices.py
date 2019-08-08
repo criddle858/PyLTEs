@@ -171,7 +171,7 @@ class UE(NetworkDevice):
             #
             # Add horizontal and vertical antenna pattern gains
             #
-            receivedPower_one += self.calcAntennaGain(bs_other[self.connectedToBS])
+            receivedPower_one += self.calcAntennaGain(bs_other)
             if obstacleVector != None:
                 receivedPower_one = receivedPower_one - self.calculateWallLoss(BS_vector, obstacleVector)
 
