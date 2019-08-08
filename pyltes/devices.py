@@ -286,9 +286,12 @@ class BS(NetworkDevice):
         self.antennaGain = 0    # dBi
         self.hGain = []  # Horizontal antenna gain
         self.vGain = []  # Vertical antenna gain
-        self.calculateGain()
             
     def calculateGain(self):
+        #
+        # Calculate vertical and horizontal gains for each angle. 
+        # Run this after setting omnidirectionalAntenna 
+        #
         if self.omnidirectionalAntenna == True:
             self.antnenaGain = 9 #dBi
             self.hBeamwidth = 360 #degrees
