@@ -138,7 +138,7 @@ class UE(NetworkDevice):
         else: # where=="out"
             receivedPower_connectedBS=self.calculatePathLoss(BS_vector[self.connectedToBS].outsidePower, R)
         
-        receivedPower_connectedBS += calcAntennaGain(BS_vector[self.connectedToBS])
+        receivedPower_connectedBS += self.calcAntennaGain(BS_vector[self.connectedToBS])
             
         if obstacleVector != None:
             receivedPower_connectedBS -= self.calculateWallLoss(BS_vector, obstacleVector)
@@ -171,7 +171,7 @@ class UE(NetworkDevice):
             #
             # Add horizontal and vertical antenna pattern gains
             #
-            receivedPower_one += calcAntennaGain(bs_other[self.connectedToBS])
+            receivedPower_one += self.calcAntennaGain(bs_other[self.connectedToBS])
             if obstacleVector != None:
                 receivedPower_one = receivedPower_one - self.calculateWallLoss(BS_vector, obstacleVector)
 
