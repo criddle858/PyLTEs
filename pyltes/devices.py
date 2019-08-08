@@ -137,8 +137,6 @@ class UE(NetworkDevice):
         for bs_other in BS_vector:
             if self.connectedToBS == bs_other.ID:
                 continue
-            if self.isSeenFromBS(bs_other) is False:
-                continue
 
             if (where=="in" and BS_vector[self.connectedToBS].useSFR):
                 sum_power_mw = 0
