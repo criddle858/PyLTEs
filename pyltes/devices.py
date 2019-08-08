@@ -24,6 +24,8 @@ class UE(NetworkDevice):
         distance_bs_ue = self.distanceToBS(BS)
         v_angle_rad = math.atan(BS.height/distance_bs_ue)
         v_angle = math.degrees(v_angle_rad)
+        if(v_angle < 0):
+            v_angle += 360
         return int(v_angle)
 
     def hAngleFromBS(self, BS):
@@ -46,7 +48,6 @@ class UE(NetworkDevice):
         self.connectedToBS = foundBS
 
     def connectToTheBestBS(self, BS_vector, obstacleVector = None):
-    #def connectToTheBestBS(self, BS_vector, obstacleVector):
         theBestSINR = -1000
         foundBS = -1
         for bs in BS_vector:
@@ -92,16 +93,17 @@ class UE(NetworkDevice):
             wallLoss = wallLoss + obstacle[4]
         return wallLoss
 
-    def calculateReceivedPower(self, pSend, distance):
+    #def calculateReceivedPower(self, pSend, distance):
+    def calculatePathLoss(self, pSend, distance):
         #
         # Replace with simpler model used in Bijan's Matlab
+        # From 3GPP 36.931 for 2 GHz
         #
         PL = 128.1 + 37.6*math.log10(distance/1000)
         pRec = pSend - PL
         if(pRec > pSend):
             pRec = pSend
         return pRec
-
 
     def calculateNoise(self, bandwidth=20):
         k = 1.3806488 * math.pow(10, -23)
@@ -116,9 +118,9 @@ class UE(NetworkDevice):
 
         R = self.distanceToBS(BS_vector[self.connectedToBS])
         if (where=="in"):
-            receivedPower_connectedBS=self.calculateReceivedPower(BS_vector[self.connectedToBS].insidePower, R)
+            receivedPower_connectedBS=self.calculatePathLoss(BS_vector[self.connectedToBS].insidePower, R)
         else: # where=="out"
-            receivedPower_connectedBS=self.calculateReceivedPower(BS_vector[self.connectedToBS].outsidePower, R)
+            receivedPower_connectedBS=self.calculatePathLoss(BS_vector[self.connectedToBS].outsidePower, R)
 
         h_angle = self.hAngleFromBS(BS_vector[self.connectedToBS])
         v_angle = self.vAngleFromBS(BS_vector[self.connectedToBS])
@@ -267,7 +269,7 @@ class BS(NetworkDevice):
         self.omnidirectionalAntenna = False
         self.useSFR = False
         self.characteristic = []
-        self.height = 32 # feet
+        self.height = 10 # meters
         self.tilt = 0    # degrees
         self.vBeamwidth = 0
         self.hBeamwidth = 0
