@@ -97,16 +97,20 @@ class Printer:
             bs_x_locations = []
             bs_y_locations = []
             bs_ID = []
+            bs_angle = []
             bs_count = 0
             for bs in self.parent.bs:
                 bs_x_locations.append(bs.x)
                 bs_y_locations.append(bs.y)
                 bs_ID.append(bs.ID)
+                bs_angle.append(bs.angle)
                 bs_count+=1
             ax.plot(bs_x_locations, bs_y_locations, 'r^', color="red", markersize=10)
             for i in range(0,bs_count):
-                ax.annotate(bs_ID[i], xy=(bs_x_locations[i],bs_y_locations[i]), xytext=(bs_x_locations[i]+100, bs_y_locations[i]+100), color='red')
-                #print("annotating BS # ", bs_ID[i], " at (", bs_x_locations[i], ",", bs_y_locations[i],")")
+                offsetAngle = math.radians(angle[i])
+                distance = 100
+                z = distance*complex(math.sin(offsetAngle), -math.cos(offsetAngle))
+                ax.annotate(bs_ID[i], xy=(bs_x_locations[i],bs_y_locations[i]), xytext=(bs_x_locations[i]+z.real, bs_y_locations[i]+z.imag), color='red')
                         
         if UE == True:
             ue_x_locations = []
