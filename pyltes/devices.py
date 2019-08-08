@@ -35,36 +35,14 @@ class UE(NetworkDevice):
             h_angle = 360 - h_angle
         return int(h_angle)
 
-    def isSeenFromBS(self, BS):
-        #returns true if angle allow signal receive, else False
-        if BS.omnidirectionalAntenna == True:
-            return True
-        distance_bs_ue = self.distanceToBS(BS)
-        if distance_bs_ue == 0 or BS.turnedOn == False:
-            return False
-        h_angle = self.hAngleFromBS(BS)
-
-        #print("(in isSeenFromBS 3) h_angle = ", h_angle)
-        #print("... v_angle = ", self.vAngleFromBS(BS))
-        if BS.angle > h_angle:
-            alpha_diff = BS.angle - h_angle
-        else:
-            alpha_diff = h_angle - BS.angle
-        #print("BS.angle = ", BS.angle, ", alpha_diff = ", alpha_diff)
-        if alpha_diff <= 60 or alpha_diff >= 300:
-            return True
-        else:
-            return False
-
     def connectToNearestBS(self, BS_vector):
         closestDistance = -1
         foundBS = -1
         for bs in BS_vector:
-            if self.isSeenFromBS(bs):
-                currentDistance = self.distanceToBS(bs)
-                if currentDistance < closestDistance or foundBS == -1:
-                    closestDistance = currentDistance
-                    foundBS = bs.ID
+            currentDistance = self.distanceToBS(bs)
+            if currentDistance < closestDistance or foundBS == -1:
+                closestDistance = currentDistance
+                foundBS = bs.ID
         self.connectedToBS = foundBS
 
     def connectToTheBestBS(self, BS_vector, obstacleVector = None):
@@ -72,12 +50,11 @@ class UE(NetworkDevice):
         theBestSINR = -1000
         foundBS = -1
         for bs in BS_vector:
-            if self.isSeenFromBS(bs):
-                self.connectedToBS = bs.ID
-                currentSINR = self.calculateSINR(BS_vector, obstacleVector)
-                if theBestSINR < currentSINR or foundBS == -1:
-                    theBestSINR = currentSINR
-                    foundBS = bs.ID
+            self.connectedToBS = bs.ID
+            currentSINR = self.calculateSINR(BS_vector, obstacleVector)
+            if theBestSINR < currentSINR or foundBS == -1:
+                theBestSINR = currentSINR
+                foundBS = bs.ID
         self.connectedToBS = foundBS
 
     def calculateWallLoss(self, BS_vector, obstacleVector):
