@@ -125,7 +125,7 @@ class UE(NetworkDevice):
         if(v_angle < 0):
             v_angle += 360
         antennaGain += BS.hGain[h_angle]
-        antennaGain += BS.vGain[v_angle]
+        #antennaGain += BS.vGain[v_angle]
         return antennaGain
                           
     def calculateSINRfor(self, where, BS_vector, obstacleVector = None):
