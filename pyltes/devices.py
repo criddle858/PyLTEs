@@ -184,7 +184,7 @@ class UE(NetworkDevice):
         SINR_mw = S_mw/(I_mw+N_mw)
         SINR = 10*math.log10(SINR_mw)
         
-        if(SINR ? 40):
+        if(SINR > 40):
             SINR = 40
         if(SINR < -40):
             SINR = -40
