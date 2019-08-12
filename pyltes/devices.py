@@ -185,7 +185,7 @@ class UE(NetworkDevice):
         SINR = 10*math.log10(SINR_mw)
 
         if(debug):
-            print("R=", R, ", I_mw = ",I_mw,", S_mw = ",S_mw,", N_mw = ",N_mw)
+            print("SINR = ", SINR,  " x =", self.x, " y =", self.y, " R=", R, ", I_mw = ",I_mw,", S_mw = ",S_mw)
         
         if(SINR > 40):
             SINR = 40
