@@ -49,7 +49,6 @@ class Printer:
                     debug = 0
                     if( (x % 10) == 0 and (y % 10) == 0 ):
                         debug = 1
-                        print("x=",x,", y=",y," debug:")
                     SINR = ue.calculateSINR(self.parent.bs, self.parent.obstacles, debug)
                     imageMatrix[y][x] = SINR
                     
