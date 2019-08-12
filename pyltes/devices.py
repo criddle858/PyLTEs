@@ -146,6 +146,7 @@ class UE(NetworkDevice):
         myColor = BS_vector[self.connectedToBS].color
         receivedPower_otherBS_mw = 0
         receivedPower_one = -1000 # dB
+        otherBSCount = 0
         for bs_other in BS_vector:
             if self.connectedToBS == bs_other.ID:
                 continue
@@ -174,8 +175,7 @@ class UE(NetworkDevice):
             receivedPower_one += self.calcAntennaGain(bs_other)
             if obstacleVector != None:
                 receivedPower_one = receivedPower_one - self.calculateWallLoss(BS_vector, obstacleVector)
-
-        receivedPower_otherBS_mw = receivedPower_otherBS_mw + math.pow(10, receivedPower_one/10)
+            receivedPower_otherBS_mw = receivedPower_otherBS_mw + math.pow(10, receivedPower_one/10)
 
         I_mw = receivedPower_otherBS_mw
         S_mw = math.pow(10, receivedPower_connectedBS/10)
