@@ -128,7 +128,7 @@ class UE(NetworkDevice):
         antennaGain += BS.vGain[v_angle]
         return antennaGain
                           
-    def calculateSINRfor(self, where, BS_vector, obstacleVector = None):
+    def calculateSINRfor(self, where, BS_vector, obstacleVector = None, debug=False):
         if (where not in ["in", "out"]):
             raise Exception("wrong argument")
 
@@ -183,6 +183,9 @@ class UE(NetworkDevice):
 
         SINR_mw = S_mw/(I_mw+N_mw)
         SINR = 10*math.log10(SINR_mw)
+
+        if(debug):
+            print("R=", R, ", I_mw = ",I_mw,", S_mw = ",S_mw,", N_mw = ",N_mw)
         
         if(SINR > 40):
             SINR = 40
@@ -191,17 +194,17 @@ class UE(NetworkDevice):
         
         return SINR
 
-    def calculateSINR(self, BS_vector, obstacleVector = None):
+    def calculateSINR(self, BS_vector, obstacleVector = None, debug=False):
         if BS_vector[self.connectedToBS].useSFR:
-            SINRin = self.calculateSINRfor("in", BS_vector, obstacleVector)
+            SINRin = self.calculateSINRfor("in", BS_vector, obstacleVector, debug)
             if(SINRin > BS_vector[self.connectedToBS].mi):
                 SINR=SINRin
                 self.inside = True
             else:
-                SINR=self.calculateSINRfor("out", BS_vector, obstacleVector)
+                SINR=self.calculateSINRfor("out", BS_vector, obstacleVector, debug)
                 self.inside = False
         else:
-            SINR=self.calculateSINRfor("out", BS_vector, obstacleVector)
+            SINR=self.calculateSINRfor("out", BS_vector, obstacleVector, debug)
             self.inside = False
         return SINR
 
