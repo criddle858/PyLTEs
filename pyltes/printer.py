@@ -62,7 +62,7 @@ class Printer:
                 divider = make_axes_locatable(ax)
                 cax1 = divider.append_axes("right", size="5%", pad=0.05)
                 cbar = plt.colorbar(image, cax = cax1)
-                #cbar.set_clim(-60, 60)
+                cbar.set_clim(-60, 60)
                 #cbar.ax.set_yticklabels(['0','1','2','>3'])
                 #cbar.set_label('# of contacts', rotation=270)
 
