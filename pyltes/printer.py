@@ -46,7 +46,10 @@ class Printer:
                     ue.x = x * d_x
                     ue.y = y * d_y
                     ue.connectToTheBestBS(self.parent.bs, self.parent.obstacles)
-                    SINR = ue.calculateSINR(self.parent.bs, self.parent.obstacles)
+                    debug = 0
+                    if( (x % 10) == 0 and (y % 10) == 0 ):
+                        debug == 1
+                    SINR = ue.calculateSINR(self.parent.bs, self.parent.obstacles, debug)
                     imageMatrix[y][x] = SINR
                     
             print("minimum SINR = ", imageMatrix.min())
