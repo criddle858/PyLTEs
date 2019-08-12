@@ -183,8 +183,6 @@ class UE(NetworkDevice):
 
         SINR_mw = S_mw/(I_mw+N_mw)
         SINR = 10*math.log10(SINR_mw)
-
-        print("I_mw = ", I_mw, ", S_mw = ", S_mw, ", N_mw = ", N_mw, ", SINR = ", SINR)
         
         return SINR
 
