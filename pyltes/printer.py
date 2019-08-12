@@ -48,6 +48,10 @@ class Printer:
                     ue.connectToTheBestBS(self.parent.bs, self.parent.obstacles)
                     SINR = ue.calculateSINR(self.parent.bs, self.parent.obstacles)
                     imageMatrix[y][x] = SINR
+                    
+            print("minimum SINR = ", imageMatrix.min())
+            print("maximum SINR = ", imageMatrix.max())
+           
             if colorMinValue != None:
                 colorMin = colorMinValue
             else:
