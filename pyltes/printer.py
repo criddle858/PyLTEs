@@ -47,8 +47,8 @@ class Printer:
                     ue.y = y * d_y
                     ue.connectToTheBestBS(self.parent.bs, self.parent.obstacles)
                     debug = 0
-                    if( (x % 10) == 0 and (y % 10) == 0 ):
-                        debug = 1
+                    #if( (x % 10) == 0 and (y % 10) == 0 ):
+                    #    debug = 1
                     SINR = ue.calculateSINR(self.parent.bs, self.parent.obstacles, debug)
                     imageMatrix[y][x] = SINR
                     
