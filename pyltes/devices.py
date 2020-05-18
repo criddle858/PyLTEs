@@ -183,7 +183,8 @@ class UE(NetworkDevice):
 
         SINR_mw = S_mw/(I_mw+N_mw)
         SINR = 10*math.log10(SINR_mw)
-
+        RSRP = 10*math.log10(S_mw + I_mw + N_mw)
+        
         if(debug):
             print("SINR = ", SINR,  " x =", self.x, " y =", self.y, " R=", R, ", I_mw = ",I_mw,", S_mw = ",S_mw)
         
@@ -192,7 +193,7 @@ class UE(NetworkDevice):
         if(SINR < -40):
             SINR = -40
         
-        return SINR
+        return SINR, RSRP
 
     def calculateSINR(self, BS_vector, obstacleVector = None, debug=False):
         if BS_vector[self.connectedToBS].useSFR:
