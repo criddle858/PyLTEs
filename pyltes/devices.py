@@ -52,7 +52,7 @@ class UE(NetworkDevice):
         foundBS = -1
         for bs in BS_vector:
             self.connectedToBS = bs.ID
-            currentSINR = self.calculateSINR(BS_vector, obstacleVector)
+            currentSINR, _ = self.calculateSINR(BS_vector, obstacleVector)
             if theBestSINR < currentSINR or foundBS == -1:
                 theBestSINR = currentSINR
                 foundBS = bs.ID
