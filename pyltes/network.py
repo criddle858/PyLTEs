@@ -162,7 +162,7 @@ class CellularNetwork:
         for ue in self.ue:
             for bs in self.bs:
                 if bs.ID == ue.connectedToBS:
-                    calculatedSINR = ue.calculateSINR(self.bs)
+                    calculatedSINR, _ = ue.calculateSINR(self.bs)
                     temp_measured_vector.append(calculatedSINR)
         return temp_measured_vector
 
