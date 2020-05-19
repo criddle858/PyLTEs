@@ -49,7 +49,7 @@ class Printer:
                     debug = 0
                     #if( (x % 10) == 0 and (y % 10) == 0 ):
                     #    debug = 1
-                    SINR = ue.calculateSINR(self.parent.bs, self.parent.obstacles, debug)
+                    SINR, _ = ue.calculateSINR(self.parent.bs, self.parent.obstacles, debug)
                     imageMatrix[y][x] = SINR
                     
             print("minimum SINR = ", imageMatrix.min())
