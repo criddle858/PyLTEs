@@ -87,16 +87,11 @@ class CellularNetwork:
             ue.connectToNearestBS(self.bs)
 
     def moveUE(self, range_pct):
-        print("moving all UE")
-        print("constraintAreaMax_X = ", self.constraintAreaMaxX)
-        print("constraintAreaMax_Y = ", self.constraintAreaMaxY)
         for ue in self.ue:
-            print("old location:", ue.x, ue.y, end="")
             x_delta = range_pct*random.random()*self.constraintAreaMaxX
             y_delta = range_pct*random.random()*self.constraintAreaMaxY
             ue.x = (ue.x + x_delta) % self.constraintAreaMaxX
             ue.y = (ue.y + y_delta) % self.constraintAreaMaxY
-            print("new location:", ue.x, ue.y)
 
     def connectUsersToTheBestBS(self):
         for ue in self.ue:
