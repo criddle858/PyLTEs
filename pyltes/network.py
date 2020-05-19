@@ -94,8 +94,8 @@ class CellularNetwork:
             print("ue", ue, "old location:", ue.x, ue.y, end="")
             ue.x = (ue.x + range_pct*random()*self.constraintAreaMaxX) % self.constraintAreaMaxX
             ue.y = (ue.y + range_pct*random()*self.constraintAreaMaxY) % self.constraintAreaMaxY
-            print("new location:", ue.x, ue.y
-	
+            print("new location:", ue.x, ue.y)
+
     def connectUsersToTheBestBS(self):
         for ue in self.ue:
             ue.connectToTheBestBS(self.bs, self.obstacles) #ccr
