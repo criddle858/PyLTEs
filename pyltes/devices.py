@@ -197,22 +197,22 @@ class UE(NetworkDevice):
 
     def calculateSINR(self, BS_vector, obstacleVector = None, debug=False):
         if BS_vector[self.connectedToBS].useSFR:
-            SINRin = self.calculateSINRfor("in", BS_vector, obstacleVector, debug)
+            SINRin, RSRP= self.calculateSINRfor("in", BS_vector, obstacleVector, debug)
             if(SINRin > BS_vector[self.connectedToBS].mi):
                 SINR=SINRin
                 self.inside = True
             else:
-                SINR=self.calculateSINRfor("out", BS_vector, obstacleVector, debug)
+                SINR, RSRP =self.calculateSINRfor("out", BS_vector, obstacleVector, debug)
                 self.inside = False
         else:
-            SINR=self.calculateSINRfor("out", BS_vector, obstacleVector, debug)
+            SINR, RSRP =self.calculateSINRfor("out", BS_vector, obstacleVector, debug)
             self.inside = False
-        return SINR
+        return SINR, RSRP
 
     def calculateMaxThroughputOfTheNode(self, bs_vector, obstacles = None):
         r_i = 0.0
         M_i = 0.0
-        sinr = self.calculateSINR(bs_vector, obstacles)
+        sinr, _ = self.calculateSINR(bs_vector, obstacles)
         if sinr < -5.45:
             r_i = 0
             M_i = 1
