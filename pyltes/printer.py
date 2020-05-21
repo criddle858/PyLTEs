@@ -94,6 +94,7 @@ class Printer:
                             RSSI_best = temp_RSSI
                             BS_best = bs.ID
 
+                    print(x,y,BS_best)
                     imageMatrix[y][x] = BS_best
             plt.imshow(imageMatrix, origin='lower', extent=[0, self.parent.constraintAreaMaxX, 0, self.parent.constraintAreaMaxY], interpolation='nearest', cmap=cm)
 
