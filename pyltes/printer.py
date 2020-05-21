@@ -89,8 +89,7 @@ class Printer:
                     for bs in self.parent.bs:
                         ue.x = x * d_x
                         ue.y = y * d_y
-                        if ue.isSeenFromBS(bs) == False:
-                            continue
+
                         ue.connectedToBS = bs.ID
                         temp_RSSI = ue.calculateSINR(self.parent.bs)
                         if temp_RSSI > RSSI_best:
