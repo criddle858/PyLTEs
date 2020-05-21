@@ -47,7 +47,7 @@ class Printer:
                     ue.connectToTheBestBS(self.parent.bs, self.parent.obstacles)
                     SINR, RSRP = ue.calculateSINR(self.parent.bs, self.parent.obstacles, debug)
                     imageMatrix[y][x] = SINR
-                if fillMethod == "Sectors_ccr":
+                elif fillMethod == "Sectors_ccr":
                     RSSI_best = -1000
                     BS_best = -1
                     for bs in self.parent.bs:
@@ -76,7 +76,7 @@ class Printer:
                 #cbar.ax.set_yticklabels(['0','1','2','>3'])
                 #cbar.set_label('# of contacts', rotation=270)
 
-        elif fillMethod == "Sectors":
+        if fillMethod == "Sectors":
             if colorMap == None:
                 cm = plt.cm.get_cmap("Paired")
             else:
