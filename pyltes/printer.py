@@ -36,10 +36,9 @@ class Printer:
         cm = plt.cm.get_cmap(colorMap)
         ue = devices.UE()
         imageMatrix = np.zeros((tilesInLine, tilesInLine))
+        d_x = round(self.parent.constraintAreaMaxX/tilesInLine)
+        d_y = round(self.parent.constraintAreaMaxY/tilesInLine)
         if fillMethod == "SINR":
-        
-            d_x = round(self.parent.constraintAreaMaxX/tilesInLine)
-            d_y = round(self.parent.constraintAreaMaxY/tilesInLine)
             for x in range(0, tilesInLine):
                 for y in range(0, tilesInLine):
                     ue.x = x * d_x
