@@ -180,6 +180,9 @@ class UE(NetworkDevice):
             receivedPower_one += self.calcAntennaGain(bs_other)
             if obstacleVector != None:
                 receivedPower_one = receivedPower_one - self.calculateWallLoss(BS_vector, obstacleVector)
+            if(self.ID == 5):
+                print("  Rx power from BS", bs_other.ID, ":", receivedPower_one)
+            
             receivedPower_otherBS_mw = receivedPower_otherBS_mw + math.pow(10, receivedPower_one/10)
 
         I_mw = receivedPower_otherBS_mw
