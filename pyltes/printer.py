@@ -39,27 +39,25 @@ class Printer:
         d_x = round(self.parent.constraintAreaMaxX/tilesInLine)
         d_y = round(self.parent.constraintAreaMaxY/tilesInLine)
 
-#         if fillMethod == "SINR":
         for x in range(0, tilesInLine):
             for y in range(0, tilesInLine):
                 ue.x = x * d_x
                 ue.y = y * d_y
                 if fillMethod == "SINR":
                     ue.connectToTheBestBS(self.parent.bs, self.parent.obstacles)
-                    debug = 0
-                    SINR, RSSI = ue.calculateSINR(self.parent.bs, self.parent.obstacles)#, debug)
+                    SINR, RSSP = ue.calculateSINR(self.parent.bs, self.parent.obstacles)
                     imageMatrix[y][x] = SINR
                 if fillMethod == "ccr":
                     RSSI_best = -1000
                     BS_best = -1
                     for bs in self.parent.bs:
                         ue.connectedToBs = bs.ID
-                        temp_RSSI, RSRP = ue.calculateSINR(self.parent.bs)
+                        temp_RSSI, RSRP = ue.calculateSINR(self.parent.bs, self.parent.obstacles)
                         if temp_RSSI > RSSI_best:
                             RSSI_best = temp_RSSI
                             BS_best = bs.ID
                     imageMatrix[y][x] = bs.ID
-                    
+                    print(x,y,bs.ID)
         if colorMinValue != None:
             colorMin = colorMinValue
         else:
