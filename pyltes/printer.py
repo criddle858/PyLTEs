@@ -47,14 +47,14 @@ class Printer:
                 if fillMethod == "SINR":
                     ue.connectToTheBestBS(self.parent.bs, self.parent.obstacles)
                     debug = 0
-                    SINR, _ = ue.calculateSINR(self.parent.bs, self.parent.obstacles, debug)
+                    SINR, RSSI = ue.calculateSINR(self.parent.bs, self.parent.obstacles, debug)
                     imageMatrix[y][x] = SINR
                 if fillMethod == "ccr":
                     RSSI_best = -1000
                     BS_best = -1
                     for bs in self.parent.bs:
                         ue.connectedToBs = bs.ID
-                        temp_RSSI, RSRP = ue.calculateSINR(self.parent.ps)
+                        temp_RSSI, RSRP = ue.calculateSINR(self.parent.bs)
                         if temp_RSSI > RSSI_best:
                             RSSI_best = temp_RSSI
                             BS_best = bs.ID
