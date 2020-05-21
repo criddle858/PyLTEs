@@ -94,7 +94,7 @@ class Generator:
         y = int(math.floor(math.sqrt(numberOfBS)))
         if x*y < numberOfBS:
             y += 1
-        print("Network has",x,"columns and",y,"rows")
+        print("Network is",x,"by",y)
 
         self.parent.constraintAreaMaxX = (x+0.5) * radius * math.sqrt(3)
         self.parent.constraintAreaMaxY = 2 * radius + 3/2 * radius * (y-1)
@@ -114,7 +114,6 @@ class Generator:
                 bs.Rc = radius
                 bs.angle = 120 * j
                 even_row_offset =  (1-int(i%(2*x)/x)) * math.sqrt(3)/2 * radius
-                print("i=",i,"ero=",even_row_offset)
                 bs.x = math.sqrt(3)/2*radius + even_row_offset + math.sqrt(3)*(i%x) * radius
                 bs.y = radius + 3/2*radius*(int(i/x))
                 self.parent.bs.append(bs)
