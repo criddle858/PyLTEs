@@ -87,8 +87,8 @@ class Generator:
 
         if not omnidirectionalAntennas:
             if numberOfBS % 3 != 0:
-                print("Incorrect number of BaseStations for sector antennas. Increasing the number.")
-            numberOfBS = 3*math.ceil(numberOfBS / 3.0)
+                print("Incorrect number of BaseStations for sector antennas. Increasing to be divisible by 3.")
+            numberOfBS = math.ceil(numberOfBS / 3.0)
 
         x = int(math.ceil(math.sqrt(numberOfBS)))
         y = int(math.floor(math.sqrt(numberOfBS)))
