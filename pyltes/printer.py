@@ -45,11 +45,11 @@ class Printer:
                 ue.y = y * d_y
                 if fillMethod == "SINR":
                     ue.connectToTheBestBS(self.parent.bs, self.parent.obstacles)
-                    SINR, RSSP = ue.calculateSINR(self.parent.bs, self.parent.obstacles)
+                    SINR, RSRP = ue.calculateSINR(self.parent.bs, self.parent.obstacles)
                     imageMatrix[y][x] = SINR
                 if fillMethod == "RSRP":
                     ue.connectToTheBestBS(self.parent.bs, self.parent.obstacles)
-                    SINR, RSSP = ue.calculateSINR(self.parent.bs, self.parent.obstacles)
+                    SINR, RSRP = ue.calculateSINR(self.parent.bs, self.parent.obstacles)
                     imageMatrix[y][x] = RSRP
                     print(x,y,RSRP)
                 if fillMethod == "Sectors_ccr":
