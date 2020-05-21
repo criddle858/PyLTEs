@@ -91,7 +91,7 @@ class Printer:
                         ue.y = y * d_y
 
                         ue.connectedToBS = bs.ID
-                        temp_RSSI = ue.calculateSINR(self.parent.bs)
+                        temp_RSSI, _ = ue.calculateSINR(self.parent.bs)
                         if temp_RSSI > RSSI_best:
                             RSSI_best = temp_RSSI
                             BS_best = bs.ID
