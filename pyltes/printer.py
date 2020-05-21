@@ -32,10 +32,12 @@ class Printer:
     def drawNetwork(self, filename, BS=True, UE=True, links=True, obstacles=True, fillMethod="SINR", colorMap = 'viridis', drawLegend=True, tilesInLine = 100, figSize = (8, 8), colorMinValue = None, colorMaxValue = None, outputFileFormat = ["png"]):
         main_draw = plt.figure(1, figsize=figSize)
         ax = main_draw.add_subplot(111)
+        
+        cm = plt.cm.get_cmap(colorMap)
+        ue = devices.UE()
+        imageMatrix = np.zeros((tilesInLine, tilesInLine))
         if fillMethod == "SINR":
-            cm = plt.cm.get_cmap(colorMap)
-            ue = devices.UE()
-            imageMatrix = np.zeros((tilesInLine, tilesInLine))
+        
             d_x = round(self.parent.constraintAreaMaxX/tilesInLine)
             d_y = round(self.parent.constraintAreaMaxY/tilesInLine)
             for x in range(0, tilesInLine):
