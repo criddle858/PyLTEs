@@ -29,14 +29,11 @@ class Printer:
         plt.savefig(filename+".png", format="png", dpi=300)
         plt.clf()
 
-    def drawNetwork(self, filename, BS=True, UE=True, links=True, obstacles=True, fillMethod="SINR", colorMap = None, drawLegend=True, tilesInLine = 100, figSize = (8, 8), colorMinValue = None, colorMaxValue = None, outputFileFormat = ["png"]):
+    def drawNetwork(self, filename, BS=True, UE=True, links=True, obstacles=True, fillMethod="SINR", colorMap = 'viridis', drawLegend=True, tilesInLine = 100, figSize = (8, 8), colorMinValue = None, colorMaxValue = None, outputFileFormat = ["png"]):
         main_draw = plt.figure(1, figsize=figSize)
         ax = main_draw.add_subplot(111)
         if fillMethod == "SINR":
-            if colorMap == None:
-                cm = plt.cm.get_cmap("viridis")
-            else:
-                cm = plt.cm.get_cmap(colorMap)
+            cm = plt.cm.get_cmap(colorMap)
             ue = devices.UE()
             imageMatrix = np.zeros((tilesInLine, tilesInLine))
             d_x = round(self.parent.constraintAreaMaxX/tilesInLine)
@@ -52,9 +49,6 @@ class Printer:
                     SINR, _ = ue.calculateSINR(self.parent.bs, self.parent.obstacles, debug)
                     imageMatrix[y][x] = SINR
                     
-            print("minimum SINR = ", imageMatrix.min())
-            print("maximum SINR = ", imageMatrix.max())
-           
             if colorMinValue != None:
                 colorMin = colorMinValue
             else:
