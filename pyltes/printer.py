@@ -115,7 +115,7 @@ class Printer:
             ax.plot(bs_x_locations, bs_y_locations, 'r^', color="red", markersize=10)
             for i in range(0,bs_count):
                 offsetAngle = math.radians(bs_angle[i])
-                distance = (self.parent.constraintAreaMaxX + self.parent.constraintAreaMaxY) / 100
+                distance = (self.parent.constraintAreaMaxX + self.parent.constraintAreaMaxY) / 50
                 z = distance*complex(math.sin(offsetAngle), -math.cos(offsetAngle))
                 ax.annotate(bs_ID[i], xy=(bs_x_locations[i],bs_y_locations[i]), xytext=(bs_x_locations[i]+z.real, bs_y_locations[i]+z.imag), color='red')
                         
