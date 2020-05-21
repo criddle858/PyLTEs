@@ -100,11 +100,7 @@ class Generator:
         self.parent.constraintAreaMaxY = 2 * radius + 3/2 * radius * (y-1)
         self.parent.radius = radius
 
-        xc = 0
-        yc = 0
-        xo = 1
-
-        for i in range(0, numberOfBS):
+        for i in range(numberOfBS):
             sectors = 1
             if not omnidirectionalAntennas:
                 sectors = 3
@@ -117,17 +113,11 @@ class Generator:
                 bs.useSFR = SFR
                 bs.Rc = radius
                 bs.angle = 120 * j
-                bs.x = math.sqrt(3)/2 * radius * (xc + 1) + math.sqrt(3)/2 * radius * xo
-                bs.y = 2*radius + 3/2*radius*(yc-1)
+                even_row_offset = (1-int(j%(2*x)/x)) * radius 
+                bs.x = math.sqrt(3)/2*radius + even_row_offset + math.sqrt(3)*(i%x)  
+                bs.y = radius + 3/2*radius*(int(j/x))
                 self.parent.bs.append(bs)
-            xc += 2
-            if xc > 2*x-1:
-                xc = 0
-                yc +=2
-                if (yc/2) % 2 == 1:
-                    xo = 0
-                else:
-                    xo = 1
+                
     def createHoneycombBSdeployment(self, radius, numberOfBS = 36, omnidirectionalAntennas = False, SFR = False):
         """This function creates a honeycomb deployment with any number of Base Stations eg. 2 or 9
         In case of sector antennas the number will be increased to by multiply of 3 because it's
