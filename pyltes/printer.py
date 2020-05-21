@@ -38,42 +38,38 @@ class Printer:
         imageMatrix = np.zeros((tilesInLine, tilesInLine))
         d_x = round(self.parent.constraintAreaMaxX/tilesInLine)
         d_y = round(self.parent.constraintAreaMaxY/tilesInLine)
-        if fillMethod == "SINR":
-            for x in range(0, tilesInLine):
-                for y in range(0, tilesInLine):
-                    ue.x = x * d_x
-                    ue.y = y * d_y
-                    if fillMethod == "SINR":
-                        ue.connectToTheBestBS(self.parent.bs, self.parent.obstacles)
-                        debug = 0
-                        #if( (x % 10) == 0 and (y % 10) == 0 ):
-                        #    debug = 1
-                        SINR, _ = ue.calculateSINR(self.parent.bs, self.parent.obstacles, debug)
-                        imageMatrix[y][x] = SINR
-                    
-            if colorMinValue != None:
-                colorMin = colorMinValue
-            else:
-                colorMin = imageMatrix.min()
-            if colorMaxValue != None:
-                colorMax = colorMaxValue
-            else:
-                colorMax = imageMatrix.max()
-            image = plt.imshow(imageMatrix, vmin=colorMin, vmax=colorMax, origin='lower', extent=[0, self.parent.constraintAreaMaxX, 0, self.parent.constraintAreaMaxY], interpolation='nearest', cmap=cm)
-            if drawLegend == True:
-                from mpl_toolkits.axes_grid1 import make_axes_locatable
-                divider = make_axes_locatable(ax)
-                cax1 = divider.append_axes("right", size="5%", pad=0.05)
-                cbar = plt.colorbar(image, cax = cax1)
-                cbar.set_clim(-40, 40)
-                #cbar.ax.set_yticklabels(['0','1','2','>3'])
-                #cbar.set_label('# of contacts', rotation=270)
+
+#         if fillMethod == "SINR":
+        for x in range(0, tilesInLine):
+            for y in range(0, tilesInLine):
+                ue.x = x * d_x
+                ue.y = y * d_y
+                if fillMethod == "SINR":
+                    ue.connectToTheBestBS(self.parent.bs, self.parent.obstacles)
+                    debug = 0
+                    #if( (x % 10) == 0 and (y % 10) == 0 ):
+                    #    debug = 1
+                    SINR, _ = ue.calculateSINR(self.parent.bs, self.parent.obstacles, debug)
+                    imageMatrix[y][x] = SINR
+
+        if colorMinValue != None:
+            colorMin = colorMinValue
+        else:
+            colorMin = imageMatrix.min()
+        if colorMaxValue != None:
+            colorMax = colorMaxValue
+        else:
+            colorMax = imageMatrix.max()
+        image = plt.imshow(imageMatrix, vmin=colorMin, vmax=colorMax, origin='lower', extent=[0, self.parent.constraintAreaMaxX, 0, self.parent.constraintAreaMaxY], interpolation='nearest', cmap=cm)
+        if drawLegend == True:
+            from mpl_toolkits.axes_grid1 import make_axes_locatable
+            divider = make_axes_locatable(ax)
+            cax1 = divider.append_axes("right", size="5%", pad=0.05)
+            cbar = plt.colorbar(image, cax = cax1)
+            cbar.set_clim(-40, 40) #end
 
         if fillMethod == "Sectors":
-            if colorMap == None:
-                cm = plt.cm.get_cmap("Paired")
-            else:
-                cm = plt.cm.get_cmap(colorMap)
+            cm = plt.cm.get_cmap(colorMap)
             ue = devices.UE()
             imageMatrix = np.zeros((tilesInLine, tilesInLine))
             d_x = round(self.parent.constraintAreaMaxX/tilesInLine)
