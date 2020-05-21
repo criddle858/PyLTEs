@@ -59,11 +59,11 @@ class UE(NetworkDevice):
                 foundBS = bs.ID
         self.connectedToBS = foundBS
 
-    def calculateWallLoss(self, BS_vector, obstacleVector):
+    def calculateWallLoss(self, fromThisBS, BS_vector, obstacleVector):
         wallLoss = 0
         for obstacle in obstacleVector:
-            s10_x = self.x - BS_vector[self.connectedToBS].x
-            s10_y = self.y - BS_vector[self.connectedToBS].y
+            s10_x = self.x - BS_vector[fromThisBS].x
+            s10_y = self.y - BS_vector[fromThisBS].y
             s32_x = obstacle[2] - obstacle[0]
             s32_y = obstacle[3] - obstacle[1]
 
@@ -74,8 +74,8 @@ class UE(NetworkDevice):
 
             denom_is_positive = denom > 0
 
-            s02_x = BS_vector[self.connectedToBS].x - obstacle[0]
-            s02_y = BS_vector[self.connectedToBS].y - obstacle[1]
+            s02_x = BS_vector[fromThisBS].x - obstacle[0]
+            s02_y = BS_vector[fromThisBS].y - obstacle[1]
 
             s_numer = s10_x * s02_y - s10_y * s02_x
 
@@ -142,9 +142,9 @@ class UE(NetworkDevice):
         receivedPower_connectedBS += self.calcAntennaGain(BS_vector[self.connectedToBS])
             
         if obstacleVector != None:
-            receivedPower_connectedBS -= self.calculateWallLoss(BS_vector, obstacleVector)
+            receivedPower_connectedBS -= self.calculateWallLoss(self.connectedToBS, BS_vector, obstacleVector)
             if(self.ID == 5):
-                print("UE", self.ID, "BS", self.connectedToBS, "WallLoss", self.calculateWallLoss(BS_vector, obstacleVector))
+                print("UE", self.ID, "BS", self.connectedToBS, "WallLoss", self.calculateWallLoss(self.connectedToBS, BS_vector, obstacleVector))
 #             if(self.ID == 5):
 #                 print("after WL:", receivedPower_connectedBS)
             
@@ -179,7 +179,7 @@ class UE(NetworkDevice):
             #
             receivedPower_one += self.calcAntennaGain(bs_other)
             if obstacleVector != None:
-                receivedPower_one = receivedPower_one - self.calculateWallLoss(BS_vector, obstacleVector)
+                receivedPower_one = receivedPower_one - self.calculateWallLoss(bs_other.ID, BS_vector, obstacleVector)
             if(self.ID == 5):
                 print("  Rx power from BS", bs_other.ID, ":", receivedPower_one)
             
