@@ -51,7 +51,6 @@ class Printer:
                     ue.connectToTheBestBS(self.parent.bs, self.parent.obstacles)
                     SINR, RSRP = ue.calculateSINR(self.parent.bs, self.parent.obstacles)
                     imageMatrix[y][x] = RSRP
-                    print(x,y,RSRP)
                 if fillMethod == "Sectors_ccr":
                     RSSI_best = -1000
                     BS_best = -1
@@ -78,29 +77,29 @@ class Printer:
             cbar = plt.colorbar(image, cax = cax1)
             cbar.set_clim(-40, 40) #end
 
-        if fillMethod == "Sectors":
-            cm = plt.cm.get_cmap(colorMap)
-            ue = devices.UE()
-            imageMatrix = np.zeros((tilesInLine, tilesInLine))
-            d_x = round(self.parent.constraintAreaMaxX/tilesInLine)
-            d_y = round(self.parent.constraintAreaMaxY/tilesInLine)
-            for x in range(0, tilesInLine):
-                for y in range(0, tilesInLine):
-                    RSSI_best = -1000
-                    BS_best = -1
-                    for bs in self.parent.bs:
-                        ue.x = x * d_x
-                        ue.y = y * d_y
+#         if fillMethod == "Sectors":
+#             cm = plt.cm.get_cmap(colorMap)
+#             ue = devices.UE()
+#             imageMatrix = np.zeros((tilesInLine, tilesInLine))
+#             d_x = round(self.parent.constraintAreaMaxX/tilesInLine)
+#             d_y = round(self.parent.constraintAreaMaxY/tilesInLine)
+#             for x in range(0, tilesInLine):
+#                 for y in range(0, tilesInLine):
+#                     RSSI_best = -1000
+#                     BS_best = -1
+#                     for bs in self.parent.bs:
+#                         ue.x = x * d_x
+#                         ue.y = y * d_y
 
-                        ue.connectedToBS = bs.ID
-                        temp_RSSI, _ = ue.calculateSINR(self.parent.bs)
-                        if temp_RSSI > RSSI_best:
-                            RSSI_best = temp_RSSI
-                            BS_best = bs.ID
+#                         ue.connectedToBS = bs.ID
+#                         temp_RSSI, _ = ue.calculateSINR(self.parent.bs)
+#                         if temp_RSSI > RSSI_best:
+#                             RSSI_best = temp_RSSI
+#                             BS_best = bs.ID
 
-                    print(x,y,BS_best)
-                    imageMatrix[y][x] = BS_best
-            plt.imshow(imageMatrix, origin='lower', extent=[0, self.parent.constraintAreaMaxX, 0, self.parent.constraintAreaMaxY], interpolation='nearest', cmap=cm)
+#                     print(x,y,BS_best)
+#                     imageMatrix[y][x] = BS_best
+#             plt.imshow(imageMatrix, origin='lower', extent=[0, self.parent.constraintAreaMaxX, 0, self.parent.constraintAreaMaxY], interpolation='nearest', cmap=cm)
 
         if BS == True:
             bs_x_locations = []
