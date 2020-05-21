@@ -43,12 +43,13 @@ class Printer:
                 for y in range(0, tilesInLine):
                     ue.x = x * d_x
                     ue.y = y * d_y
-                    ue.connectToTheBestBS(self.parent.bs, self.parent.obstacles)
-                    debug = 0
-                    #if( (x % 10) == 0 and (y % 10) == 0 ):
-                    #    debug = 1
-                    SINR, _ = ue.calculateSINR(self.parent.bs, self.parent.obstacles, debug)
-                    imageMatrix[y][x] = SINR
+                    if fillMethod == "SINR":
+                        ue.connectToTheBestBS(self.parent.bs, self.parent.obstacles)
+                        debug = 0
+                        #if( (x % 10) == 0 and (y % 10) == 0 ):
+                        #    debug = 1
+                        SINR, _ = ue.calculateSINR(self.parent.bs, self.parent.obstacles, debug)
+                        imageMatrix[y][x] = SINR
                     
             if colorMinValue != None:
                 colorMin = colorMinValue
@@ -68,7 +69,7 @@ class Printer:
                 #cbar.ax.set_yticklabels(['0','1','2','>3'])
                 #cbar.set_label('# of contacts', rotation=270)
 
-        elif fillMethod == "Sectors":
+        if fillMethod == "Sectors":
             if colorMap == None:
                 cm = plt.cm.get_cmap("Paired")
             else:
