@@ -142,13 +142,11 @@ class UE(NetworkDevice):
         receivedPower_connectedBS += self.calcAntennaGain(BS_vector[self.connectedToBS])
             
         if obstacleVector != None:
-            if(self.ID == 5):
-                print("before WL:", receivedPower_connectedBS)
             receivedPower_connectedBS -= self.calculateWallLoss(BS_vector, obstacleVector)
             if(self.ID == 5):
                 print("UE", self.ID, "BS", self.connectedToBS, "WallLoss", self.calculateWallLoss(BS_vector, obstacleVector))
-            if(self.ID == 5):
-                print("after WL:", receivedPower_connectedBS)
+#             if(self.ID == 5):
+#                 print("after WL:", receivedPower_connectedBS)
             
         myColor = BS_vector[self.connectedToBS].color
         receivedPower_otherBS_mw = 0
@@ -192,7 +190,7 @@ class UE(NetworkDevice):
         SINR = 10*math.log10(SINR_mw)
         RSRP = 10*math.log10(S_mw + I_mw + N_mw)
         
-        if(debug):
+        if(self.ID == 5):
             print("SINR = ", SINR,  " x =", self.x, " y =", self.y, " R=", R, ", I_mw = ",I_mw,", S_mw = ",S_mw)
         
         if(SINR > 40):
