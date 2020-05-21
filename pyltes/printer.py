@@ -29,35 +29,32 @@ class Printer:
         plt.savefig(filename+".png", format="png", dpi=300)
         plt.clf()
 
-    def drawNetwork(self, filename, BS=True, UE=True, links=True, obstacles=True, fillMethod="SINR", colorMap = 'viridis', drawLegend=True, tilesInLine = 100, figSize = (8, 8), colorMinValue = None, colorMaxValue = None, outputFileFormat = ["png"]):
+    def drawNetwork(self, filename, BS=True, UE=True, links=True, obstacles=True, fillMethod="SINR", colorMap = None, drawLegend=True, tilesInLine = 100, figSize = (8, 8), colorMinValue = None, colorMaxValue = None, outputFileFormat = ["png"]):
         main_draw = plt.figure(1, figsize=figSize)
         ax = main_draw.add_subplot(111)
-
-#         if fillMethod == "SINR":
-        cm = plt.cm.get_cmap(colorMap)
-        ue = devices.UE()
-        imageMatrix = np.zeros((tilesInLine, tilesInLine))
-        d_x = round(self.parent.constraintAreaMaxX/tilesInLine)
-        d_y = round(self.parent.constraintAreaMaxY/tilesInLine)
-        for x in range(0, tilesInLine):
-            for y in range(0, tilesInLine):
-                ue.x = x * d_x
-                ue.y = y * d_y
-                if fillMethod == "SINR":
+        if fillMethod == "SINR":
+            if colorMap == None:
+                cm = plt.cm.get_cmap("viridis")
+            else:
+                cm = plt.cm.get_cmap(colorMap)
+            ue = devices.UE()
+            imageMatrix = np.zeros((tilesInLine, tilesInLine))
+            d_x = round(self.parent.constraintAreaMaxX/tilesInLine)
+            d_y = round(self.parent.constraintAreaMaxY/tilesInLine)
+            for x in range(0, tilesInLine):
+                for y in range(0, tilesInLine):
+                    ue.x = x * d_x
+                    ue.y = y * d_y
                     ue.connectToTheBestBS(self.parent.bs, self.parent.obstacles)
-                    SINR, RSRP = ue.calculateSINR(self.parent.bs, self.parent.obstacles)
+                    debug = 0
+                    #if( (x % 10) == 0 and (y % 10) == 0 ):
+                    #    debug = 1
+                    SINR, _ = ue.calculateSINR(self.parent.bs, self.parent.obstacles, debug)
                     imageMatrix[y][x] = SINR
-                elif fillMethod == "Sectors_ccr":
-                    RSSI_best = -1000
-                    BS_best = -1
-                    for bs in self.parent.bs:
-                        ue.connectedToBS = bs.ID
-                        temp_RSSI, _ = ue.calculateSINR(self.parent.bs, self.parent.obstacles)
-                        if temp_RSSI > RSSI_best:
-                            RSSI_best = temp_RSSI
-                            BS_best = bs.ID
-                    imageMatrix[y][x] = BS_best
                     
+            print("minimum SINR = ", imageMatrix.min())
+            print("maximum SINR = ", imageMatrix.max())
+           
             if colorMinValue != None:
                 colorMin = colorMinValue
             else:
@@ -76,7 +73,7 @@ class Printer:
                 #cbar.ax.set_yticklabels(['0','1','2','>3'])
                 #cbar.set_label('# of contacts', rotation=270)
 
-        if fillMethod == "Sectors":
+        elif fillMethod == "Sectors":
             if colorMap == None:
                 cm = plt.cm.get_cmap("Paired")
             else:
