@@ -113,9 +113,9 @@ class Generator:
                 bs.useSFR = SFR
                 bs.Rc = radius
                 bs.angle = 120 * j
-                even_row_offset = (1-int(j%(2*x)/x)) * radius 
-                bs.x = math.sqrt(3)/2*radius + even_row_offset + math.sqrt(3)*(i%x)  
-                bs.y = radius + 3/2*radius*(int(j/x))
+                even_row_offset = (1-int(i%(2*x)/x)) * radius 
+                bs.x = math.sqrt(3)/2*radius + even_row_offset + math.sqrt(3)*(i%x) * radius
+                bs.y = radius + 3/2*radius*(int(i/x))
                 self.parent.bs.append(bs)
                 
     def createHoneycombBSdeployment(self, radius, numberOfBS = 36, omnidirectionalAntennas = False, SFR = False):
