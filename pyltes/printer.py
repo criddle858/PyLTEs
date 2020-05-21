@@ -45,7 +45,7 @@ class Printer:
                 ue.y = y * d_y
                 if fillMethod == "SINR":
                     ue.connectToTheBestBS(self.parent.bs, self.parent.obstacles)
-                    SINR, RSRP = ue.calculateSINR(self.parent.bs, self.parent.obstacles, debug)
+                    SINR, RSRP = ue.calculateSINR(self.parent.bs, self.parent.obstacles)
                     imageMatrix[y][x] = SINR
                 elif fillMethod == "Sectors_ccr":
                     RSSI_best = -1000
