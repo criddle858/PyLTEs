@@ -62,7 +62,7 @@ class Printer:
                             BS_best = bs.ID
                     imageMatrix[y][x] = BS_best
                     print(x,y,SINR_best, imageMatrix[y][x])
-        np.set_printoptions(threshold=np.nan)
+        np.set_printoptions(threshold=1000)
         print("Image Matrix:")
         print(imageMatrix)
         if colorMinValue != None:
