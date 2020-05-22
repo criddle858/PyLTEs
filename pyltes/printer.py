@@ -52,16 +52,16 @@ class Printer:
                     SINR, RSRP = ue.calculateSINR(self.parent.bs, self.parent.obstacles)
                     imageMatrix[y][x] = RSRP
                 if fillMethod == "Sectors_ccr":
-                    RSSI_best = -1000
+                    SINR_best = -1000
                     BS_best = -1
                     for bs in self.parent.bs:
                         ue.connectedToBS = bs.ID
-                        temp_RSSI, RSSP = ue.calculateSINR(self.parent.bs, self.parent.obstacles)
-                        if (temp_RSSI > RSSI_best) and (temp_RSSI > -39.5):
-                            RSSI_best = temp_RSSI
+                        temp_SINR, RSSP = ue.calculateSINR(self.parent.bs, self.parent.obstacles)
+                        if (temp_SINR > SINR_best) and (temp_SINR > -39.5):
+                            SINR_best = temp_SINR
                             BS_best = bs.ID
                     imageMatrix[y][x] = BS_best
-                    print(x,y,RSSI_best, imageMatrix[y][x])
+#                     print(x,y,SINR_best, imageMatrix[y][x])
         if colorMinValue != None:
             colorMin = colorMinValue
         else:
