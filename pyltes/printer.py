@@ -60,7 +60,9 @@ class Printer:
                         if temp_RSSI > RSSI_best:
                             RSSI_best = temp_RSSI
                             BS_best = bs.ID
-                    imageMatrix[y][x] = BS_best
+                    print(ue.x, ue.y, RSSI_best)
+                    if(RSSI_best > -120):
+                        imageMatrix[y][x] = BS_best
         if colorMinValue != None:
             colorMin = colorMinValue
         else:
