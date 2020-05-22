@@ -57,7 +57,7 @@ class Printer:
                     for bs in self.parent.bs:
                         ue.connectedToBS = bs.ID
                         temp_RSSI, RSSP = ue.calculateSINR(self.parent.bs, self.parent.obstacles)
-                        if (temp_RSSI > RSSI_best) and (temp_RSSI > -40):
+                        if (temp_RSSI > RSSI_best) and (temp_RSSI > -39.5):
                             RSSI_best = temp_RSSI
                             BS_best = bs.ID
                     imageMatrix[y][x] = BS_best
