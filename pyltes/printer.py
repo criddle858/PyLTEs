@@ -57,14 +57,10 @@ class Printer:
                     for bs in self.parent.bs:
                         ue.connectedToBS = bs.ID
                         temp_SINR, RSRP = ue.calculateSINR(self.parent.bs, self.parent.obstacles)
-                        if (temp_SINR > SINR_best) and (temp_SINR > -39.5):
+                        if (temp_SINR > SINR_best) and (RSRP > -120):
                             SINR_best = temp_SINR
                             BS_best = bs.ID
                     imageMatrix[y][x] = BS_best
-                    print(x,y,SINR_best, RSRP, imageMatrix[y][x])
-        np.set_printoptions(threshold=1000)
-        print("Image Matrix:")
-        print(imageMatrix)
         if colorMinValue != None:
             colorMin = colorMinValue
         else:
