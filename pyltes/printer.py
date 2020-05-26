@@ -51,7 +51,7 @@ class Printer:
         # If this is the fist time, or if something changed
         if(self.imageMatrixValid == False):
             print("allocating and filling imageMatrix")
-            imageMatrix = np.zeros((tilesInLine, tilesInLine))
+            self.imageMatrix = np.zeros((tilesInLine, tilesInLine))
             d_x = self.parent.constraintAreaMaxX/tilesInLine
             d_y = self.parent.constraintAreaMaxY/tilesInLine
 
@@ -62,11 +62,11 @@ class Printer:
                     if fillMethod == "SINR":
                         ue.connectToTheBestBS(self.parent.bs, self.parent.obstacles)
                         SINR, RSRP = ue.calculateSINR(self.parent.bs, self.parent.obstacles)
-                        imageMatrix[y][x] = SINR
+                        self.imageMatrix[y][x] = SINR
                     if fillMethod == "RSRP":
                         ue.connectToTheBestBS(self.parent.bs, self.parent.obstacles)
                         SINR, RSRP = ue.calculateSINR(self.parent.bs, self.parent.obstacles)
-                        imageMatrix[y][x] = RSRP
+                        self.imageMatrix[y][x] = RSRP
                     if fillMethod == "Sectors":
                         SINR_best = -1000
                         BS_best = -1
@@ -76,7 +76,7 @@ class Printer:
                             if (temp_SINR > SINR_best) and (RSRP > -120):
                                 SINR_best = temp_SINR
                                 BS_best = bs.ID
-                        imageMatrix[y][x] = BS_best
+                        self.imageMatrix[y][x] = BS_best
             self.imageMatrixValid = True
         else:
             print("Re-using the old imageMatrix since it's valid")
@@ -84,12 +84,12 @@ class Printer:
         if colorMinValue != None:
             colorMin = colorMinValue
         else:
-            colorMin = imageMatrix.min()
+            colorMin = self.imageMatrix.min()
         if colorMaxValue != None:
             colorMax = colorMaxValue
         else:
-            colorMax = imageMatrix.max()
-        image = plt.imshow(imageMatrix, vmin=colorMin, vmax=colorMax, origin='lower', extent=[0, self.parent.constraintAreaMaxX, 0, self.parent.constraintAreaMaxY], interpolation='nearest', cmap=cm)
+            colorMax = self.imageMatrix.max()
+        image = plt.imshow(self.imageMatrix, vmin=colorMin, vmax=colorMax, origin='lower', extent=[0, self.parent.constraintAreaMaxX, 0, self.parent.constraintAreaMaxY], interpolation='nearest', cmap=cm)
         
         print("drawing legend")
         if drawLegend == True:
