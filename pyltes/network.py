@@ -88,7 +88,7 @@ class CellularNetwork:
 	
     def updateBSconnectedUELists(self):
         for ue in self.ue:
-            network.bs[ue.connectedToBS].addConnectedUE(ue.ID)
+            self.bs[ue.connectedToBS].addConnectedUE(ue.ID)
 
     def moveUE(self, range_pct):
         for ue in self.ue:
@@ -99,8 +99,7 @@ class CellularNetwork:
 
     def connectUsersToTheBestBS(self):
         for ue in self.ue:
-            ue.connectToTheBestBS(self.bs, self.obstacles) #ccr
-            #ue.connectToTheBestBS(self.bs) 
+            ue.connectToTheBestBS(self.bs, self.obstacles) 
 		
     def setPowerInAllBS(self, outsidePowerLevel, insidePowerLevel=None):
         if (insidePowerLevel==None):
