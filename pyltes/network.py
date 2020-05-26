@@ -100,6 +100,10 @@ class CellularNetwork:
     def connectUsersToTheBestBS(self):
         for ue in self.ue:
             ue.connectToTheBestBS(self.bs, self.obstacles) 
+	
+    def clearConnectedUE(self):
+        for bs in self.bs:
+            bs.clearConnectedUE()
 		
     def setPowerInAllBS(self, outsidePowerLevel, insidePowerLevel=None):
         if (insidePowerLevel==None):
