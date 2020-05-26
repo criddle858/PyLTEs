@@ -297,7 +297,14 @@ class BS(NetworkDevice):
         self.antennaGain = 0    # dBi
         self.hGain = []  # Horizontal antenna gain
         self.vGain = []  # Vertical antenna gain
-            
+        self.connectedUE = []
+        
+    def clearConnectedUE(self):
+        self.connectedUE.clear()
+
+    def addConnectedUE(self, UEID):
+        self.connectedUE.append(UEID)
+        
     def calculateGain(self):
         #
         # Calculate vertical and horizontal gains for each angle. 
