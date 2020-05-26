@@ -11,7 +11,9 @@ class Printer:
     def __init__(self,parent):
         self.parent = parent
         self.tilesInLine = 100
-        self.imageMatrix = np.zeros((tilesInLine, tilesInLine))
+        self.imageMatrixValid = False
+        self.fillMethod = "SINR"
+        self.imageMatrix = np.zeros((self.tilesInLine, self.tilesInLine))
         
     def drawHistogramOfUEThroughput(self, filename):
         thr_vector = self.parent.returnRealUEThroughputVectorRR()
@@ -37,33 +39,45 @@ class Printer:
         
         cm = plt.cm.get_cmap(colorMap)
         ue = devices.UE()
-        imageMatrix = np.zeros((tilesInLine, tilesInLine))
-        d_x = self.parent.constraintAreaMaxX/tilesInLine
-        d_y = self.parent.constraintAreaMaxY/tilesInLine
+        # check if tilesInLine changed
+        if (self.tilesInLine != tilesInLine):
+            self.tilesInLine = tilesInLine
+            self.imageMatrixValid = False 
+            
+        if (self.fillMethod != fillMethod):
+            self.fillMethod = fillMethod
+            self.imageMatrixValid = False
+        
+        # If this is the fist time, or if something changed
+        if(self.imageMatrixValid == False):
+            print("allocating and filling imageMatrix")
+            imageMatrix = np.zeros((tilesInLine, tilesInLine))
+            d_x = self.parent.constraintAreaMaxX/tilesInLine
+            d_y = self.parent.constraintAreaMaxY/tilesInLine
 
-        print("filling imageMatrix")
-        for x in range(0, tilesInLine):
-            for y in range(0, tilesInLine):
-                ue.x = round(x * d_x)
-                ue.y = round(y * d_y)
-                if fillMethod == "SINR":
-                    ue.connectToTheBestBS(self.parent.bs, self.parent.obstacles)
-                    SINR, RSRP = ue.calculateSINR(self.parent.bs, self.parent.obstacles)
-                    imageMatrix[y][x] = SINR
-                if fillMethod == "RSRP":
-                    ue.connectToTheBestBS(self.parent.bs, self.parent.obstacles)
-                    SINR, RSRP = ue.calculateSINR(self.parent.bs, self.parent.obstacles)
-                    imageMatrix[y][x] = RSRP
-                if fillMethod == "Sectors":
-                    SINR_best = -1000
-                    BS_best = -1
-                    for bs in self.parent.bs:
-                        ue.connectedToBS = bs.ID
-                        temp_SINR, RSRP = ue.calculateSINR(self.parent.bs, self.parent.obstacles)
-                        if (temp_SINR > SINR_best) and (RSRP > -120):
-                            SINR_best = temp_SINR
-                            BS_best = bs.ID
-                    imageMatrix[y][x] = BS_best
+            for x in range(0, tilesInLine):
+                for y in range(0, tilesInLine):
+                    ue.x = round(x * d_x)
+                    ue.y = round(y * d_y)
+                    if fillMethod == "SINR":
+                        ue.connectToTheBestBS(self.parent.bs, self.parent.obstacles)
+                        SINR, RSRP = ue.calculateSINR(self.parent.bs, self.parent.obstacles)
+                        imageMatrix[y][x] = SINR
+                    if fillMethod == "RSRP":
+                        ue.connectToTheBestBS(self.parent.bs, self.parent.obstacles)
+                        SINR, RSRP = ue.calculateSINR(self.parent.bs, self.parent.obstacles)
+                        imageMatrix[y][x] = RSRP
+                    if fillMethod == "Sectors":
+                        SINR_best = -1000
+                        BS_best = -1
+                        for bs in self.parent.bs:
+                            ue.connectedToBS = bs.ID
+                            temp_SINR, RSRP = ue.calculateSINR(self.parent.bs, self.parent.obstacles)
+                            if (temp_SINR > SINR_best) and (RSRP > -120):
+                                SINR_best = temp_SINR
+                                BS_best = bs.ID
+                        imageMatrix[y][x] = BS_best
+                        
         if colorMinValue != None:
             colorMin = colorMinValue
         else:
