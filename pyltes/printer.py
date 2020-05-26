@@ -10,7 +10,9 @@ class Printer:
     """Class that prints network deployment"""
     def __init__(self,parent):
         self.parent = parent
-
+        self.tilesInLine = 100
+        self.imageMatrix = np.zeros((tilesInLine, tilesInLine))
+        
     def drawHistogramOfUEThroughput(self, filename):
         thr_vector = self.parent.returnRealUEThroughputVectorRR()
         thr_MBit = [x / (1024*1024) for x in thr_vector]
