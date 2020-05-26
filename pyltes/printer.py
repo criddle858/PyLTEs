@@ -50,7 +50,6 @@ class Printer:
         
         # If this is the fist time, or if something changed
         if(self.imageMatrixValid == False):
-            print("allocating and filling imageMatrix")
             self.imageMatrix = np.zeros((tilesInLine, tilesInLine))
             d_x = self.parent.constraintAreaMaxX/tilesInLine
             d_y = self.parent.constraintAreaMaxY/tilesInLine
@@ -78,8 +77,6 @@ class Printer:
                                 BS_best = bs.ID
                         self.imageMatrix[y][x] = BS_best
             self.imageMatrixValid = True
-        else:
-            print("Re-using the old imageMatrix since it's valid")
 
         if colorMinValue != None:
             colorMin = colorMinValue
@@ -91,7 +88,6 @@ class Printer:
             colorMax = self.imageMatrix.max()
         image = plt.imshow(self.imageMatrix, vmin=colorMin, vmax=colorMax, origin='lower', extent=[0, self.parent.constraintAreaMaxX, 0, self.parent.constraintAreaMaxY], interpolation='nearest', cmap=cm)
         
-        print("drawing legend")
         if drawLegend == True:
             from mpl_toolkits.axes_grid1 import make_axes_locatable
             divider = make_axes_locatable(ax)
@@ -99,7 +95,6 @@ class Printer:
             cbar = plt.colorbar(image, cax = cax1)
             cbar.set_clim(-40, 40) #end
 
-        print("drawing BS")
         if BS == True:
             bs_x_locations = []
             bs_y_locations = []
@@ -119,7 +114,6 @@ class Printer:
                 z = distance*complex(math.sin(offsetAngle), -math.cos(offsetAngle))
                 ax.annotate(bs_ID[i], xy=(bs_x_locations[i],bs_y_locations[i]), xytext=(bs_x_locations[i]+z.real, bs_y_locations[i]+z.imag), color='red')
                         
-        print("drawing UE")
         if UE == True:
             ue_x_locations = []
             ue_y_locations = []
@@ -128,12 +122,10 @@ class Printer:
                 ue_y_locations.append(ue.y)
             ax.plot(ue_x_locations, ue_y_locations, 'b*', color="black", markersize=10)
 
-        print("drawing links")
         if links == True:
             for ue in self.parent.ue:
                 ax.arrow(ue.x, ue.y, self.parent.bs[ue.connectedToBS].x - ue.x, self.parent.bs[ue.connectedToBS].y - ue.y)
 
-        print("drawing obstacles")
         if obstacles == True:
             for obstacle in self.parent.obstacles:
                 ax.arrow(obstacle[0], obstacle[1], obstacle[2] - obstacle[0], obstacle[3] - obstacle[1], width=10, color="red")
