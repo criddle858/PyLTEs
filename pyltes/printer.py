@@ -77,7 +77,10 @@ class Printer:
                                 SINR_best = temp_SINR
                                 BS_best = bs.ID
                         imageMatrix[y][x] = BS_best
-                        
+            self.imageMatrixValid = True
+        else:
+            print("Re-using the old imageMatrix since it's valid")
+
         if colorMinValue != None:
             colorMin = colorMinValue
         else:
