@@ -87,8 +87,8 @@ class CellularNetwork:
             ue.connectToNearestBS(self.bs)
 	
     def updateBSconnectedUELists(self):
-	for ue in self.ue:
-	    network.bs[ue.connectedToBS].addConnectedUE(ue.ID)
+        for ue in self.ue:
+            network.bs[ue.connectedToBS].addConnectedUE(ue.ID)
 
     def moveUE(self, range_pct):
         for ue in self.ue:
