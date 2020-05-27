@@ -120,7 +120,8 @@ class Printer:
             for ue in self.parent.ue:
                 ue_x_locations.append(ue.x)
                 ue_y_locations.append(ue.y)
-            ax.plot(ue_x_locations, ue_y_locations, 'b*', color="black", markersize=10)
+#             ax.plot(ue_x_locations, ue_y_locations, 'b*', color="black", markersize=10)
+            ax.plot(ue_x_locations, ue_y_locations, ue.ID, color="black", markersize=10)
 
         if links == True:
             for ue in self.parent.ue:
