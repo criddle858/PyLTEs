@@ -114,14 +114,17 @@ class Printer:
                 z = distance*complex(math.sin(offsetAngle), -math.cos(offsetAngle))
                 ax.annotate(bs_ID[i], xy=(bs_x_locations[i],bs_y_locations[i]), xytext=(bs_x_locations[i]+z.real, bs_y_locations[i]+z.imag), color='red')
                         
-        if UE == True:
-            ue_x_locations = []
-            ue_y_locations = []
-            for ue in self.parent.ue:
-                ue_x_locations.append(ue.x)
-                ue_y_locations.append(ue.y)
+#         if UE == True:
+#             ue_x_locations = []
+#             ue_y_locations = []
+#             for ue in self.parent.ue:
+#                 ue_x_locations.append(ue.x)
+#                 ue_y_locations.append(ue.y)
 #             ax.plot(ue_x_locations, ue_y_locations, 'b*', color="black", markersize=10)
-            ax.plot(ue_x_locations, ue_y_locations, ue.ID, color="black", markersize=10)
+          
+        if UE == True:
+            for ue in self.parent.ue:
+                ax.annotate(ue.ID, xy=(ue.x, ue.y), xytext=(ue.x, ue.y)), color='black')
 
         if links == True:
             for ue in self.parent.ue:
