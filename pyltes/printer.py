@@ -34,7 +34,7 @@ class Printer:
         plt.clf()
 
     def drawNetwork(self, filename, BS=True, UE=True, links=True, obstacles=True, fillMethod="SINR", colorMap = 'viridis', drawLegend=True, tilesInLine = 100, figSize = (8, 8), colorMinValue = None, colorMaxValue = None, outputFileFormat = ["png"]):
-        print("testing something")
+        print("testing something special")
         main_draw = plt.figure(1, figsize=figSize)
         ax = main_draw.add_subplot(111)
         
