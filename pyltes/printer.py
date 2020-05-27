@@ -124,7 +124,7 @@ class Printer:
           
         if UE == True:
             for ue in self.parent.ue:
-                ax.annotate(ue.ID, xy=(ue.x, ue.y), xytext=(ue.x, ue.y)), color='black')
+                ax.annotate(ue.ID, xy=(ue.x, ue.y), xytext=(ue.x, ue.y), color='black')
 
         if links == True:
             for ue in self.parent.ue:
