@@ -187,9 +187,6 @@ class UE(NetworkDevice):
         SINR = 10*math.log10(SINR_mw)
         RSRP = 10*math.log10(S_mw + I_mw + N_mw)
         
-#         if(self.ID == 5):
-#             print("SINR = ", SINR,  " x =", self.x, " y =", self.y, " R=", R, ", I_mw = ",I_mw,", S_mw = ",S_mw)
-        
         if(SINR > 40):
             SINR = 40
         if(SINR < -40):
@@ -212,17 +209,35 @@ class UE(NetworkDevice):
         return SINR, RSRP
 
     def calculateMaxThroughputOfTheNode(self, bs_vector, obstacles = None):
+        # SINR min/max	r_num	r_den	  M_i	     bps  Mbps
+        # -inf	  -5.45     1	1680000	2	        10	 0.0
+        # -5.45	  -3.63    78	   1024	4	   2559375	 2.4
+        # -3.63	  -1.81 	120	   1024	4	   3937500	 3.8
+        # -1.81	      0 	193	   1024	4	   6332813	 6.0
+        # 0	       1.81 	308	   1024	4	  10106250	 9.6
+        # 1.81	   3.63 	449	   1024	4	  14732813	14.1
+        # 3.63	   5.45 	602	   1024	4	  19753125	18.8
+        # 5.45	   7.27 	378	   1024	16	24806250	23.7
+        # 7.27	   9.09 	490	   1024	16	32156250	30.7
+        # 9.09	  10.9  	616	   1024	16	40425000	38.6
+        # 10.9	  12.72 	466	   1024	64	45871875	43.7
+        # 12.72	  14.54 	567	   1024	64	55814063	53.2
+        # 14.54	  16.36 	666	   1024	64	65559375	62.5
+        # 16.36	  18.18 	722	   1024	64	71071875	67.8
+        # 18.18	  20	     873	 1024	64	85935938	82.0
+        # 20	    inf	   948	   1024	64	93318750	89.0
+
         r_i = 0.0
         M_i = 0.0
         sinr, _ = self.calculateSINR(bs_vector, obstacles)
         if sinr < -5.45:
-            r_i = 0
-            M_i = 1
+            r_i = 1/1680000
+            M_i = 2
         elif -5.45 <= sinr < -3.63:
             r_i = 78/1024
             M_i = 4
         elif -3.63 <= sinr < -1.81:
-            r_i = 120/1034
+            r_i = 120/1024
             M_i = 4
         elif -1.81 <= sinr < 0:
             r_i = 193/1024

@@ -33,14 +33,16 @@ class Printer:
         plt.savefig(filename+".png", format="png", dpi=300)
         plt.clf()
 
-    def drawNetwork(self, filename, BS=True, UE=True, links=True, obstacles=True, fillMethod="SINR", colorMap = 'viridis', drawLegend=True, tilesInLine = 100, figSize = (8, 8), colorMinValue = None, colorMaxValue = None, outputFileFormat = ["png"]):
-        print("testing something really, really, special")
+    def drawNetwork(self, filename, BS=True, UE=True, links=True, obstacles=True, fillMethod="SINR", colorMap = 'viridis', drawLegend=True, tilesInLine = 100, figSize = (8, 8), colorMinValue = None, colorMaxValue = None, outputFileFormat = ["png"], forceRedraw = False):
         main_draw = plt.figure(1, figsize=figSize)
         ax = main_draw.add_subplot(111)
         
         cm = plt.cm.get_cmap(colorMap)
         ue = devices.UE()
         # check if tilesInLine changed
+        if (forceRedraw == True):
+            self.imageMatrixValid = False
+
         if (self.tilesInLine != tilesInLine):
             self.tilesInLine = tilesInLine
             self.imageMatrixValid = False 

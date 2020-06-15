@@ -180,6 +180,10 @@ class CellularNetwork:
                     temp_measured_vector.append(calculatedSINR)
         return temp_measured_vector
 
+    #
+    # Round Robbin scheduler
+    # (equal time to all UE)
+    #
     def returnRealUEThroughputVectorRR(self):
         numberOfConnectedUEToBS = []
         max_UE_throughput_vector = []
@@ -201,6 +205,10 @@ class CellularNetwork:
                 real_UE_throughput_vector[i] = max_UE_throughput_vector[i] / numberOfConnectedUEToBS[self.ue[i].connectedToBS][1]
         return real_UE_throughput_vector
 
+    #
+    # Some kind of proportional fair scheduling
+    # (more time to UE with low SINR)
+    #
     def returnRealUEThroughputVectorFS(self):
         sumOfInvThroughputPerBS = []
         real_UE_throughput_vector = []
