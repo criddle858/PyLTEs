@@ -1,4 +1,4 @@
-__author__ = 'Mariusz Slabicki, Konrad Polys'
+__author__ = 'Mariusz Slabicki, Konrad Polys, Chris Riddle'
 
 import math
 import csv
@@ -129,6 +129,17 @@ class UE(NetworkDevice):
         antennaGain += BS.vGain[v_angle]
         return antennaGain
                           
+    def calculateRSRP(self, fromBS, BS_vector, obstacleVector = None, debug=False):
+        R = self.distanceToBS(BS_vector[fromBS])
+        receivedPower_fromBS=self.calculatePathLoss(BS_vector[fromBS].outsidePower, R)
+        receivedPower_fromBS += self.calcAntennaGain(BS_vector[fromBS])
+        if obstacleVector != None:
+            receivedPower_fromBS -= self.calculateWallLoss(fromBS, BS_vector, obstacleVector)
+        S_dB = receivedPower_fromBS
+        # Reference signal is a fraction of total signal. Take this to be 1/12 or -10.79 dB
+        S_dB = receivedPower_fromBS - 10.79
+        return(S_dB)
+
     def calculateSINRfor(self, where, BS_vector, obstacleVector = None, debug=False):
         if (where not in ["in", "out"]):
             raise Exception("wrong argument")
@@ -185,14 +196,14 @@ class UE(NetworkDevice):
 
         SINR_mw = S_mw/(I_mw+N_mw)
         SINR = 10*math.log10(SINR_mw)
-        RSRP = 10*math.log10(S_mw + I_mw + N_mw)
+        RSSI = 10*math.log10(S_mw + I_mw + N_mw)
         
         if(SINR > 40):
             SINR = 40
         if(SINR < -40):
             SINR = -40
         
-        return SINR, RSRP
+        return SINR, RSSI
 
     def calculateSINR(self, BS_vector, obstacleVector = None, debug=False):
         if BS_vector[self.connectedToBS].useSFR:
