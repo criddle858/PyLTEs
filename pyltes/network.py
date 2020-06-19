@@ -241,6 +241,9 @@ class CellularNetwork:
             real_UE_throughput_vector.append(weight * ue_throughput)
         return real_UE_throughput_vector
 
+    def clearUE(self):
+        self.ue.clear()
+        
     def returnNumberOfUEperBS(self):
         numberOfConnectedUEToBS = []
         for i in range(len(self.bs)):
