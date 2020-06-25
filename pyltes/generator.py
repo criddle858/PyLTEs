@@ -1,4 +1,4 @@
-__author__ = 'Mariusz Slabicki, Konrad Połys'
+__author__ = 'Mariusz Slabicki, Konrad PoÃ…â€šys'
 
 import math
 import csv
@@ -238,6 +238,21 @@ class Generator:
             ue.y = random.uniform(0, self.parent.constraintAreaMaxY)
             self.parent.ue.append(ue)
             number = number+1
+
+    def insertUEingroup(self, numberOfDevices, percentSpace):
+        number = 0
+        for i in range(0, numberOfDevices):
+            ue = devices.UE()
+            ue.ID = number
+            min_x = (0.5 - percentSpace/200) * self.parent.constraintAreaMaxX
+            max_x = (0.5 + percentSpace/200) * self.parent.constraintAreaMaxX
+            min_y = (0.5 - percentSpace/200) * self.parent.constraintAreaMaxY
+            max_y = (0.5 + percentSpace/200) * self.parent.constraintAreaMaxY
+            ue.x = random.uniform(min_x, max_x)
+            ue.y = random.uniform(min_y, max_y)
+            self.parent.ue.append(ue)
+            number = number+1
+
             
     def insertUE(self, xPos, yPos, ueNum):
          ue = devices.UE()

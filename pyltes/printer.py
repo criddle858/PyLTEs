@@ -63,19 +63,19 @@ class Printer:
                     ue.y = round(y * d_y)
                     if fillMethod == "SINR":
                         ue.connectToTheBestBS(self.parent.bs, self.parent.obstacles)
-                        SINR, RSRP = ue.calculateSINR(self.parent.bs, self.parent.obstacles)
+                        SINR, RSSI = ue.calculateSINR(self.parent.bs, self.parent.obstacles)
                         self.imageMatrix[y][x] = SINR
-                    if fillMethod == "RSRP":
+                    if fillMethod == "RSSI":
                         ue.connectToTheBestBS(self.parent.bs, self.parent.obstacles)
-                        SINR, RSRP = ue.calculateSINR(self.parent.bs, self.parent.obstacles)
-                        self.imageMatrix[y][x] = RSRP
+                        SINR, RSSI = ue.calculateSINR(self.parent.bs, self.parent.obstacles)
+                        self.imageMatrix[y][x] = RSSI
                     if fillMethod == "Sectors":
                         SINR_best = -1000
                         BS_best = -1
                         for bs in self.parent.bs:
                             ue.connectedToBS = bs.ID
-                            temp_SINR, RSRP = ue.calculateSINR(self.parent.bs, self.parent.obstacles)
-                            if (temp_SINR > SINR_best) and (RSRP > -120):
+                            temp_SINR, RSSI = ue.calculateSINR(self.parent.bs, self.parent.obstacles)
+                            if (temp_SINR > SINR_best) and (RSSI > -120):
                                 SINR_best = temp_SINR
                                 BS_best = bs.ID
                         self.imageMatrix[y][x] = BS_best
@@ -117,14 +117,6 @@ class Printer:
                 z = distance*complex(math.sin(offsetAngle), -math.cos(offsetAngle))
                 ax.annotate(bs_ID[i], xy=(bs_x_locations[i],bs_y_locations[i]), xytext=(bs_x_locations[i]+z.real, bs_y_locations[i]+z.imag), color='red')
                         
-#         if UE == True:
-#             ue_x_locations = []
-#             ue_y_locations = []
-#             for ue in self.parent.ue:
-#                 ue_x_locations.append(ue.x)
-#                 ue_y_locations.append(ue.y)
-#             ax.plot(ue_x_locations, ue_y_locations, 'b*', color="black", markersize=10)
-          
         if UE == True:
             for ue in self.parent.ue:
                 ax.annotate(ue.ID, xy=(ue.x, ue.y), xytext=(ue.x, ue.y), color='black')
@@ -151,4 +143,4 @@ class Printer:
             if outputFormat == "pdf":
                 main_draw.savefig(filename+".pdf", format="pdf", dpi=300, bbox_inches='tight')
         
-        plt.clf()
+        # plt.clf()

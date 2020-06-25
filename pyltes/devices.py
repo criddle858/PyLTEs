@@ -220,6 +220,8 @@ class UE(NetworkDevice):
         return SINR, RSRP
 
     def calculateMaxThroughputOfTheNode(self, bs_vector, obstacles = None):
+        # Table updated for LTE Release 12 (256 QAM, no MIMO)
+        #
         # SINR min/max	r_num	r_den	  M_i	     bps  Mbps
         # -inf	  -5.45     1	1680000	2	        10	 0.0
         # -5.45	  -3.63    78	   1024	4	   2559375	 2.4
@@ -234,9 +236,11 @@ class UE(NetworkDevice):
         # 10.9	  12.72 	466	   1024	64	45871875	43.7
         # 12.72	  14.54 	567	   1024	64	55814063	53.2
         # 14.54	  16.36 	666	   1024	64	65559375	62.5
-        # 16.36	  18.18 	722	   1024	64	71071875	67.8
-        # 18.18	  20	     873	 1024	64	85935938	82.0
-        # 20	    inf	   948	   1024	64	93318750	89.0
+        # 16.36	  18.18 	722	   1024	64	75993750    72.5
+        # 18.18	  20	    873	   1024	64	85935938	82.0
+        # 20	  21.36     948	   1024	64	93318750	89.0
+        # 21.36   23.18     772    1024 256 101325000   96.6
+        # 23.18   25+       873    1024 256 114581250  109.3
 
         r_i = 0.0
         M_i = 0.0
@@ -286,9 +290,15 @@ class UE(NetworkDevice):
         elif 18.18 <= sinr < 20:
             r_i = 873/1024
             M_i = 64
-        elif 20 <= sinr:
+        elif 20 <= sinr < 21.36:
             r_i = 948/1024
             M_i = 64
+        elif 21.36 <= sinr < 23.18:
+            r_i = 772/1024
+            M_i = 256
+        elif 23.18 <= sinr:
+            r_i = 873/1024
+            M_i = 256
 
         if bs_vector[self.connectedToBS].useSFR == True:
             if self.inside:

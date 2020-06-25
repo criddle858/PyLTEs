@@ -90,10 +90,20 @@ class CellularNetwork:
         for ue in self.ue:
             self.bs[ue.connectedToBS].addConnectedUE(ue.ID)
 
-    def moveUE(self, range_pct):
+    def moveUE(self, constantX_pct, constantY_pct, random_pct):
+        # Constant component (percent of space)
+        # Random component   (percent of space)
         for ue in self.ue:
-            x_delta = range_pct*random.random()*self.constraintAreaMaxX
-            y_delta = range_pct*random.random()*self.constraintAreaMaxY
+            constant_x   = constantX_pct/100 * self.constraintAreaMaxX
+            constant_y   = constantY_pct/100 * self.constraintAreaMaxY
+            random_min_x = -(random_pct/200) * self.constraintAreaMaxX
+            random_max_x =  (random_pct/200) * self.constraintAreaMaxX
+            random_min_y = -(random_pct/200) * self.constraintAreaMaxY
+            random_max_y =  (random_pct/200) * self.constraintAreaMaxY
+            
+            x_delta = constant_x + random.uniform(random_min_x, random_max_x)
+            y_delta = constant_y + random.uniform(random_min_y, random_max_y)
+
             ue.x = (ue.x + x_delta) % self.constraintAreaMaxX
             ue.y = (ue.y + y_delta) % self.constraintAreaMaxY
 
