@@ -28,6 +28,11 @@ class CellularNetwork:
         self.Printer = printer.Printer(self)
         self.powerConfigurator = []
         self.colorConfigurator = []
+        self.optimalTilts = []
+        self.min_tilt = 0 # degrees downtilt
+        self.max_tilt = 25 # degrees downtilt
+        self.optimalAvgLogSumRate = 0
+        self.schedulerType = "round robin"
 	
     def loadPowerConfigurator(self):
         from pyltes import powerConfigurator
@@ -90,17 +95,18 @@ class CellularNetwork:
         for ue in self.ue:
             self.bs[ue.connectedToBS].addConnectedUE(ue.ID)
 
-    def moveUE(self, constantX_pct, constantY_pct, random_pct):
+    def moveUE(self, constantX_pct=0, constantY_pct=0, random_pct=0):
         # Constant component (percent of space)
         # Random component   (percent of space)
+        # move_group: True = move all UE the same amount
+        constant_x   = constantX_pct/100 * self.constraintAreaMaxX
+        constant_y   = constantY_pct/100 * self.constraintAreaMaxY
+        random_min_x = -(random_pct/200) * self.constraintAreaMaxX
+        random_max_x =  (random_pct/200) * self.constraintAreaMaxX
+        random_min_y = -(random_pct/200) * self.constraintAreaMaxY
+        random_max_y =  (random_pct/200) * self.constraintAreaMaxY
+
         for ue in self.ue:
-            constant_x   = constantX_pct/100 * self.constraintAreaMaxX
-            constant_y   = constantY_pct/100 * self.constraintAreaMaxY
-            random_min_x = -(random_pct/200) * self.constraintAreaMaxX
-            random_max_x =  (random_pct/200) * self.constraintAreaMaxX
-            random_min_y = -(random_pct/200) * self.constraintAreaMaxY
-            random_max_y =  (random_pct/200) * self.constraintAreaMaxY
-            
             x_delta = constant_x + random.uniform(random_min_x, random_max_x)
             y_delta = constant_y + random.uniform(random_min_y, random_max_y)
 
@@ -135,6 +141,10 @@ class CellularNetwork:
                 bs.outsidePower = random.randint(0, powerLevel)
                 bs.insidePower = bs.outsidePower
 
+    def setOptimalTilts(self):
+        for bs in self.bs:
+            bs.tilt = self.optimalTilts[bs.ID]
+            
     def calcAntennaGainsInAllBS(self):
         for bs in self.bs:
             bs.calculateGain()

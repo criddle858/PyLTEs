@@ -57,6 +57,7 @@ class UE(NetworkDevice):
             if theBestSINR < currentSINR or foundBS == -1:
                 theBestSINR = currentSINR
                 foundBS = bs.ID
+        # print("UE",self.ID,"connected to", foundBS)
         self.connectedToBS = foundBS
 
     def calculateWallLoss(self, fromThisBS, BS_vector, obstacleVector):

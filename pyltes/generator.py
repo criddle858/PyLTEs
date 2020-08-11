@@ -241,13 +241,18 @@ class Generator:
 
     def insertUEingroup(self, numberOfDevices, percentSpace):
         number = 0
+        center_x = 0.5 + random.uniform(-(0.5-percentSpace/200), (0.5-percentSpace/200))
+        center_y = 0.5 + random.uniform(-(0.5-percentSpace/200), (0.5-percentSpace/200))
+        print("percentSpace = ", percentSpace)
+        print("center_x = ", center_x)
+        print("center_y = ", center_y)
         for i in range(0, numberOfDevices):
             ue = devices.UE()
             ue.ID = number
-            min_x = (0.5 - percentSpace/200) * self.parent.constraintAreaMaxX
-            max_x = (0.5 + percentSpace/200) * self.parent.constraintAreaMaxX
-            min_y = (0.5 - percentSpace/200) * self.parent.constraintAreaMaxY
-            max_y = (0.5 + percentSpace/200) * self.parent.constraintAreaMaxY
+            min_x = (center_x - percentSpace/200) * self.parent.constraintAreaMaxX
+            max_x = (center_x + percentSpace/200) * self.parent.constraintAreaMaxX
+            min_y = (center_y - percentSpace/200) * self.parent.constraintAreaMaxY
+            max_y = (center_y + percentSpace/200) * self.parent.constraintAreaMaxY
             ue.x = random.uniform(min_x, max_x)
             ue.y = random.uniform(min_y, max_y)
             self.parent.ue.append(ue)
